@@ -130,7 +130,11 @@ msgid "Stats"
 msgstr "Statistiche"
 
 #: ../panel-plugin/properties.cc:321
-msgid "Fastest (~250ms)"
+msgid "Fastest (~100ms)"
+msgstr "Il Più veloce (~100ms)"
+
+#: ../panel-plugin/properties.cc:321
+msgid "Faster (~250ms)"
 msgstr "Più veloce (~250ms)"
 
 #: ../panel-plugin/properties.cc:322

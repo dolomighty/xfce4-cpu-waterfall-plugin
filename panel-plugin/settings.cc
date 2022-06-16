@@ -30,12 +30,14 @@
 #include "xfce4++/util.h"
 #include <math.h>
 
+
 static const xfce4::RGBA default_colors[NUM_COLORS] =
 {
-    [BG_COLOR]         = {1.0, 1.0, 1.0, 0.0},
-    [FG_COLOR1]        = {0.0, 1.0, 0.0, 1.0},
+    [BG_COLOR]         = {1.0, 1.0, 1.0, 1.0},
+    [FG_COLOR1]        = {0.0, 0.0, 0.0, 1.0},
     [FG_COLOR2]        = {1.0, 0.0, 0.0, 1.0},
 };
+
 
 static const gchar *const color_keys[NUM_COLORS] =
 {
@@ -44,26 +46,19 @@ static const gchar *const color_keys[NUM_COLORS] =
     [FG_COLOR2]        = "Foreground2",
 };
 
+
 void
 read_settings (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
 {
-    CPUHeatmapUpdateRate rate = RATE_NORMAL;
+    CPUHeatmapUpdateRate rate = RATE_100MS;
     CPUHeatmapMode mode = MODE_HEATMAP;
-    guint color_mode = 0;
-//    bool bars = true;
     bool border = true;
     bool frame = false;
-//    bool highlight_smt = HIGHLIGHT_SMT_BY_DEFAULT;
-//    bool nonlinear = false;
-//    bool per_core = false;
-//    guint per_core_spacing = PER_CORE_SPACING_DEFAULT;
-//    guint tracked_core = 0;
 
     xfce4::RGBA colors[NUM_COLORS];
     std::string command;
     bool in_terminal = true;
     bool startup_notification = false;
-    guint load_threshold = 0;
 
     for (guint i = 0; i < NUM_COLORS; i++)
         colors[i] = default_colors[i];
@@ -81,20 +76,11 @@ read_settings (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
             Ptr0<std::string> value;
 
             rate = (CPUHeatmapUpdateRate) rc->read_int_entry ("UpdateInterval", rate);
-//            nonlinear = rc->read_int_entry ("TimeScale", nonlinear);
             size = rc->read_int_entry ("Size", size);
-//            mode = (CPUHeatmapMode) rc->read_int_entry ("Mode", mode);
-//            color_mode = rc->read_int_entry ("ColorMode", color_mode);
             frame = rc->read_int_entry ("Frame", frame);
             in_terminal = rc->read_int_entry ("InTerminal", in_terminal);
             startup_notification = rc->read_int_entry ("StartupNotification", startup_notification);
             border = rc->read_int_entry ("Border", border);
-//            bars = rc->read_int_entry ("Bars", bars);
-//            highlight_smt = rc->read_int_entry ("SmtIssues", highlight_smt);
-//            per_core = rc->read_int_entry ("PerCore", per_core);
-//            per_core_spacing = rc->read_int_entry ("PerCoreSpacing", per_core_spacing);
-//            tracked_core = rc->read_int_entry ("TrackedCore", tracked_core);
-            load_threshold = rc->read_int_entry ("LoadThreshold", load_threshold);
 
             if ((value = rc->read_entry ("Command", NULL))) {
                 command = *value;
@@ -105,8 +91,6 @@ read_settings (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
                 if ((value = rc->read_entry (color_keys[i], NULL)))
                 {
                     xfce4::RGBA::parse (colors[i], *value);
-//                    if (i == BARS_COLOR)
-//                        base->has_barcolor = true;
                 }
             }
 
@@ -125,45 +109,33 @@ read_settings (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
                 mode = MODE_HEATMAP;
         }
 
-//        if (mode == MODE_DISABLED && !bars)
-//            mode = MODE_HEATMAP;
-
         switch (rate)
         {
-            case RATE_FASTEST:
-            case RATE_FASTER:
-            case RATE_FAST:
-            case RATE_NORMAL:
-            case RATE_SLOW:
-            case RATE_SLOWEST:
+            case RATE_100MS:
+            case RATE_300MS:
+            case RATE_500MS:
+            case RATE_1S:
+            case RATE_3S:
                 break;
             default:
-                rate = RATE_NORMAL;
+                rate = RATE_100MS;
         }
 
         if (G_UNLIKELY (size <= 0))
             size = 10;
     }
 
-//    CPUHeatmap::set_bars (base, bars);
     CPUHeatmap::set_border (base, border);
     for (guint i = 0; i < NUM_COLORS; i++)
         CPUHeatmap::set_color (base, (CPUHeatmapColorNumber) i, colors[i]);
-//    CPUHeatmap::set_color_mode (base, color_mode);
     CPUHeatmap::set_command (base, command);
     CPUHeatmap::set_in_terminal (base, in_terminal);
     CPUHeatmap::set_frame (base, frame);
-    CPUHeatmap::set_load_threshold (base, load_threshold * 0.01f);
     CPUHeatmap::set_mode (base, mode);
-//    CPUHeatmap::set_nonlinear_time (base, nonlinear);
-//    CPUHeatmap::set_per_core (base, per_core);
-//    CPUHeatmap::set_per_core_spacing (base, per_core_spacing);
     CPUHeatmap::set_size (base, size);
-//    CPUHeatmap::set_smt (base, highlight_smt);
     CPUHeatmap::set_startup_notification (base, startup_notification);
-//    CPUHeatmap::set_tracked_core (base, tracked_core);
-//    CPUHeatmap::set_update_rate (base, rate);
 }
+
 
 void
 write_settings (XfcePanelPlugin *plugin, const Ptr<const CPUHeatmap> &base)
@@ -180,27 +152,18 @@ write_settings (XfcePanelPlugin *plugin, const Ptr<const CPUHeatmap> &base)
     if (!rc)
         return;
 
-    rc->write_default_int_entry ("UpdateInterval", base->update_interval, RATE_NORMAL);
-//    rc->write_int_entry ("TimeScale", base->non_linear ? 1 : 0);
+    rc->write_default_int_entry ("UpdateInterval", base->update_interval, RATE_100MS);
     rc->write_int_entry ("Size", base->size);
     rc->write_default_int_entry ("Mode", base->mode, MODE_HEATMAP);
     rc->write_int_entry ("Frame", base->has_frame ? 1 : 0);
     rc->write_int_entry ("Border", base->has_border ? 1 : 0);
-//    rc->write_int_entry ("Bars", base->has_bars ? 1 : 0);
-//    rc->write_int_entry ("PerCore", base->per_core ? 1 : 0);
-//    rc->write_int_entry ("TrackedCore", base->tracked_core);
     rc->write_default_entry ("Command", base->command, "");
     rc->write_int_entry ("InTerminal", base->command_in_terminal ? 1 : 0);
     rc->write_int_entry ("StartupNotification", base->command_startup_notification ? 1 : 0);
-//    rc->write_int_entry ("ColorMode", base->color_mode);
-    rc->write_default_int_entry ("LoadThreshold", gint (roundf (100 * base->load_threshold)), 0);
 
     for (guint i = 0; i < NUM_COLORS; i++)
     {
         const gchar *key = color_keys[i];
-
-//        if(i == BARS_COLOR && !base->has_barcolor)
-//            key = NULL;
 
         if (key)
         {
@@ -209,9 +172,6 @@ write_settings (XfcePanelPlugin *plugin, const Ptr<const CPUHeatmap> &base)
             rc->write_default_entry (key, rgba, rgba_default);
         }
     }
-
-//    rc->write_default_int_entry ("SmtIssues", base->highlight_smt ? 1 : 0, HIGHLIGHT_SMT_BY_DEFAULT);
-//    rc->write_default_int_entry ("PerCoreSpacing", base->per_core_spacing, PER_CORE_SPACING_DEFAULT);
 
     rc->close ();
 }

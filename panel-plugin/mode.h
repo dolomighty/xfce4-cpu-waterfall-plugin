@@ -26,10 +26,6 @@
 
 #include "cpu.h"
 
-//void draw_graph_normal     (const Ptr<CPUHeatmap> &base, cairo_t *cr, gint w, gint h, guint core);
-//void draw_graph_LED        (const Ptr<CPUHeatmap> &base, cairo_t *cr, gint w, gint h, guint core);
-//void draw_graph_no_history (const Ptr<CPUHeatmap> &base, cairo_t *cr, gint w, gint h, guint core);
-//void draw_graph_grid       (const Ptr<CPUHeatmap> &base, cairo_t *cr, gint w, gint h, guint core);
 void draw_graph_heatmap    (const Ptr<CPUHeatmap> &base, cairo_t *cr, gint w, gint h);
 
 #endif /* _XFCE_CPUHEATMAP_MODE_H_ */

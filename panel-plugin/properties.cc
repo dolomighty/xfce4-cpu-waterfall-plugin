@@ -40,13 +40,8 @@ struct CPUHeatmapOptions
     const Ptr<CPUHeatmap> base;
 
     GtkColorButton  *color_buttons[NUM_COLORS] = {};
-//    GtkWidget       *color_mode_combobox = NULL;
-//    GtkBox          *hbox_highlight_smt = NULL;
     GtkBox          *hbox_in_terminal = NULL;
-//    GtkBox          *hbox_per_core_spacing = NULL;
     GtkBox          *hbox_startup_notification = NULL;
-//    GtkToggleButton *per_core = NULL, *show_bars_checkbox = NULL;
-//    GtkLabel        *smt_stats = NULL;
     guint           timeout_id = 0;
 
     CPUHeatmapOptions(const Ptr<CPUHeatmap> &_base) : base(_base) {}
@@ -63,13 +58,6 @@ struct CPUHeatmapOptions
             timeout_id = 0;
         }
     }
-
-//    static std::string
-//    smt_stats_tooltip() {
-//        return std::string() +
-//            _("'Overall' is showing the impact on the overall performance of the machine.") + "\n" +
-//            _("'Hotspots' is showing the momentary performance impact on just the threads involved in suboptimal SMT scheduling decisions.");
-//    }
 };
 
 static GtkBox*    create_tab ();
@@ -81,20 +69,16 @@ static GtkWidget* create_drop_down (GtkBox *tab, GtkSizeGroup *sg, const gchar *
                                     const std::vector<std::string> &items, size_t init,
                                     const std::function<void(GtkComboBox*)> &callback);
 static void       setup_update_interval_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> &data);
-//static void       setup_tracked_core_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> &data);
 static void       setup_size_option (GtkBox *vbox, GtkSizeGroup *sg, XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base);
 static void       setup_command_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> &data);
 static void       setup_color_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> &data,
                                       CPUHeatmapColorNumber number, const gchar *name, const gchar *tooltip,
                                       const std::function<void(GtkColorButton*)> &callback);
 static void       setup_mode_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> &data);
-//static void       setup_color_mode_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> &data);
-static void       setup_load_threshold_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmap> &base);
-//static GtkBox*    setup_per_core_spacing_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmap> &base);
 static void       change_color (GtkColorButton  *button, const Ptr<CPUHeatmap> &base, CPUHeatmapColorNumber number);
 static void       update_sensitivity (const Ptr<CPUHeatmapOptions> &data, bool initial = false);
 
-static xfce4::TimeoutResponse update_cb (const Ptr<CPUHeatmapOptions> &data);
+
 
 void
 create_options (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
@@ -128,9 +112,7 @@ create_options (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
 
     GtkBox *vbox = create_tab ();
     setup_update_interval_option (vbox, sg, dlg_data);
-//    setup_tracked_core_option (vbox, sg, dlg_data);
     setup_size_option (vbox, sg, plugin, base);
-    setup_load_threshold_option (vbox, sg, base);
 
     gtk_box_pack_start (vbox, gtk_separator_new (GTK_ORIENTATION_HORIZONTAL), FALSE, FALSE, BORDER/2);
     setup_command_option (vbox, sg, dlg_data);
@@ -152,17 +134,6 @@ create_options (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
     gtk_box_pack_start (vbox, gtk_separator_new (GTK_ORIENTATION_HORIZONTAL), FALSE, FALSE, BORDER/2);
 
     gtk_box_pack_start (vbox, gtk_separator_new (GTK_ORIENTATION_HORIZONTAL), FALSE, FALSE, BORDER/2);
-//    create_check_box (vbox, sg, _("Use non-linear time-scale"), base->non_linear, NULL,
-//        [dlg_data](GtkToggleButton *button) {
-//            CPUHeatmap::set_nonlinear_time (dlg_data->base, gtk_toggle_button_get_active (button));
-//            update_sensitivity (dlg_data);
-//        });
-//    create_check_box (vbox, sg, _("Per-core history graphs"), base->per_core, &dlg_data->per_core,
-//        [dlg_data](GtkToggleButton *button) {
-//            CPUHeatmap::set_per_core (dlg_data->base, gtk_toggle_button_get_active (button));
-//            update_sensitivity (dlg_data);
-//        });
-//    dlg_data->hbox_per_core_spacing  = setup_per_core_spacing_option (vbox, sg, base);
 
     GtkBox *vbox2 = create_tab ();
     setup_color_option (vbox2, sg, dlg_data, FG_COLOR1, _("Color 1:"), NULL, [base](GtkColorButton *button) {
@@ -171,25 +142,11 @@ create_options (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
     setup_color_option (vbox2, sg, dlg_data, FG_COLOR2, _("Color 2:"), NULL, [base](GtkColorButton *button) {
         change_color (button, base, FG_COLOR2);
     });
-//    setup_color_option (vbox2, sg, dlg_data, FG_COLOR3, _("Color 3:"), NULL, [base](GtkColorButton *button) {
-//        change_color (button, base, FG_COLOR3);
-//    });
     setup_color_option (vbox2, sg, dlg_data, BG_COLOR, _("Background:"), NULL, [base](GtkColorButton *button) {
         change_color (button, base, BG_COLOR);
     });
     setup_mode_option (vbox2, sg, dlg_data);
-//    setup_color_mode_option (vbox2, sg, dlg_data);
     gtk_box_pack_start (vbox2, gtk_separator_new (GTK_ORIENTATION_HORIZONTAL), FALSE, FALSE, BORDER/2);
-//    create_check_box (vbox2, sg, ngettext ("Show current usage bar", "Show current usage bars", base->nr_cores),
-//        base->has_bars, &dlg_data->show_bars_checkbox,
-//        [dlg_data](GtkToggleButton *button) {
-//            CPUHeatmap::set_bars (dlg_data->base, gtk_toggle_button_get_active (button));
-//            update_sensitivity (dlg_data);
-//        });
-//    setup_color_option (vbox2, sg, dlg_data, BARS_COLOR, _("Bars color:"), NULL, [base](GtkColorButton *button) {
-//        base->has_barcolor = true;
-//        change_color (button, base, BARS_COLOR);
-//    });
     gtk_box_pack_start (vbox2, gtk_separator_new (GTK_ORIENTATION_HORIZONTAL), FALSE, FALSE, BORDER/2);
     create_check_box (vbox2, sg, _("Show frame"), base->has_frame, NULL,
         [dlg_data](GtkToggleButton *button) {
@@ -202,25 +159,19 @@ create_options (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
             update_sensitivity (dlg_data);
         });
 
-//    GtkBox *vbox3 = create_tab ();
-//    dlg_data->smt_stats = create_label_line (vbox3, "");
-
     GtkWidget *notebook = gtk_notebook_new ();
     gtk_container_set_border_width (GTK_CONTAINER (notebook), BORDER - 2);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook), GTK_WIDGET (vbox2), gtk_label_new (_("Appearance")));
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook), GTK_WIDGET (vbox), gtk_label_new (_("Advanced")));
-//    gtk_notebook_append_page (GTK_NOTEBOOK (notebook), GTK_WIDGET (vbox3), gtk_label_new (_("Stats")));
 
     GtkWidget *content = gtk_dialog_get_content_area (GTK_DIALOG (dlg));
     gtk_container_add (GTK_CONTAINER (content), notebook);
-
-    update_cb (dlg_data);
-    dlg_data->timeout_id = xfce4::timeout_add (100, [dlg_data]() { return update_cb(dlg_data); });
 
     gtk_widget_show_all (notebook);
     update_sensitivity (dlg_data, true);
     gtk_widget_show (dlg);
 }
+
 
 static GtkBox *
 create_tab ()
@@ -229,6 +180,7 @@ create_tab ()
     gtk_container_set_border_width (GTK_CONTAINER (tab), BORDER);
     return tab;
 }
+
 
 static GtkLabel *
 create_label_line (GtkBox *tab, const gchar *text)
@@ -243,6 +195,7 @@ create_label_line (GtkBox *tab, const gchar *text)
 
     return label;
 }
+
 
 static GtkBox *
 create_option_line (GtkBox *tab, GtkSizeGroup *sg, const gchar *name, const gchar *tooltip)
@@ -270,6 +223,7 @@ create_option_line (GtkBox *tab, GtkSizeGroup *sg, const gchar *name, const gcha
     return line;
 }
 
+
 static GtkBox*
 create_check_box (GtkBox *tab, GtkSizeGroup *sg, const gchar *name, bool init,
                   GtkToggleButton **out_checkbox,
@@ -287,6 +241,7 @@ create_check_box (GtkBox *tab, GtkSizeGroup *sg, const gchar *name, bool init,
 
     return hbox;
 }
+
 
 static GtkWidget*
 create_drop_down (GtkBox *tab, GtkSizeGroup *sg, const gchar *name,
@@ -306,16 +261,16 @@ create_drop_down (GtkBox *tab, GtkSizeGroup *sg, const gchar *name,
     return combo;
 }
 
+
 static void
 setup_update_interval_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> &data)
 {
     const std::vector<std::string> items = {
-        _("Fastest (~100ms)"),
-        _("Faster (~250ms)"),
-        _("Fast (~500ms)"),
-        _("Normal (~750ms)"),
-        _("Slow (~1s)"),
-        _("Slowest (~3s)")
+        _("~100ms"),
+        _("~300ms"),
+        _("~500ms"),
+        _("~1s"),
+        _("~3s")
     };
 
     create_drop_down (vbox, sg, _("Update Interval:"), items, data->base->update_interval,
@@ -324,26 +279,6 @@ setup_update_interval_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatm
         });
 }
 
-//static void
-//setup_tracked_core_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> &data)
-//{
-//    const gsize nb_items = data->base->nr_cores + 1;
-//    std::vector<std::string> items(nb_items);
-//
-//    items[0] = _("All");
-//    for (gsize i = 1; i < nb_items; i++)
-//        items[i] = xfce4::sprintf ("%zu", i-1);
-//
-//    create_drop_down (vbox, sg, _("Tracked Core:"), items, data->base->tracked_core,
-//        [data](GtkComboBox *combo) {
-//            CPUHeatmap::set_tracked_core (data->base, gtk_combo_box_get_active (combo));
-//            if (data->base->tracked_core != 0)
-//                CPUHeatmap::set_per_core (data->base, false);
-//            else
-//                CPUHeatmap::set_per_core (data->base, gtk_toggle_button_get_active (data->per_core));
-//            update_sensitivity (data);
-//        });
-//}
 
 static void
 setup_size_option (GtkBox *vbox, GtkSizeGroup *sg, XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
@@ -362,31 +297,9 @@ setup_size_option (GtkBox *vbox, GtkSizeGroup *sg, XfcePanelPlugin *plugin, cons
     });
 }
 
-static void
-setup_load_threshold_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmap> &base)
-{
-    GtkBox *hbox = create_option_line (vbox, sg, _("Threshold (%):"), NULL);
-    GtkWidget *threshold = gtk_spin_button_new_with_range (0, (gint) roundf (100 * MAX_LOAD_THRESHOLD), 1);
-    gtk_spin_button_set_value (GTK_SPIN_BUTTON (threshold), (gint) roundf (100 * base->load_threshold));
-    gtk_box_pack_start (GTK_BOX (hbox), threshold, FALSE, FALSE, 0);
-    xfce4::connect (GTK_SPIN_BUTTON (threshold), "value-changed", [base](GtkSpinButton *button) {
-        CPUHeatmap::set_load_threshold (base, gtk_spin_button_get_value (button) / 100);
-    });
-}
 
-//static GtkBox*
-//setup_per_core_spacing_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmap> &base)
-//{
-//    GtkBox *hbox = create_option_line (vbox, sg, _("Spacing:"), NULL);
-//    GtkWidget *spacing = gtk_spin_button_new_with_range (PER_CORE_SPACING_MIN, PER_CORE_SPACING_MAX, 1);
-//    gtk_spin_button_set_value (GTK_SPIN_BUTTON (spacing), base->per_core_spacing);
-//    gtk_widget_set_tooltip_text (GTK_WIDGET (hbox), _("Spacing between per-core history graphs"));
-//    gtk_box_pack_start (GTK_BOX (hbox), spacing, FALSE, FALSE, 0);
-//    xfce4::connect (GTK_SPIN_BUTTON (spacing), "value-changed", [base](GtkSpinButton *button) {
-//        CPUHeatmap::set_per_core_spacing (base, gtk_spin_button_get_value_as_int (button));
-//    });
-//    return hbox;
-//}
+
+
 
 static void
 setup_command_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> &data)
@@ -411,6 +324,7 @@ setup_command_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOption
     });
 }
 
+
 static void
 setup_color_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> &data,
                     CPUHeatmapColorNumber number, const gchar *name, const gchar *tooltip,
@@ -424,16 +338,13 @@ setup_color_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions>
     xfce4::connect (data->color_buttons[number], "color-set", callback);
 }
 
+
 static void
 setup_mode_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> &data)
 {
 
     const std::vector<std::string> items = {
         _("Disabled"),
-//        _("Normal"),
-//        _("LED"),
-//        _("No history"),
-//        _("Grid"),
         _("Heatmap"),
     };
 
@@ -441,27 +352,19 @@ setup_mode_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> 
     switch (data->base->mode)
     {
         case MODE_DISABLED:   selected = 0; break;
-//        case MODE_NORMAL:     selected = 1; break;
-//        case MODE_LED:        selected = 2; break;
-//        case MODE_NO_HISTORY: selected = 3; break;
-//        case MODE_GRID:       selected = 4; break;
-        case MODE_HEATMAP:    selected = 5; break;
+        case MODE_HEATMAP:    selected = 1; break;
     }
 
     create_drop_down (vbox, sg, _("Mode:"), items, selected,
         [data](GtkComboBox *combo) {
             /* 'Disabled' mode was introduced in 1.1.0 as '-1'
              * for this reason we need to decrement the selected value */
-            gint active = gtk_combo_box_get_active (combo) - 1;
+            gint active = gtk_combo_box_get_active (combo);
             CPUHeatmapMode mode;
 
             switch (active)
             {
                 case MODE_DISABLED:
-//                case MODE_NORMAL:
-//                case MODE_LED:
-//                case MODE_NO_HISTORY:
-//                case MODE_GRID:
                 case MODE_HEATMAP:
                     mode = (CPUHeatmapMode) active;
                     break;
@@ -470,29 +373,12 @@ setup_mode_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> 
             }
 
             CPUHeatmap::set_mode (data->base, mode);
-//            if (mode == MODE_DISABLED && !data->base->has_bars)
-//                gtk_toggle_button_set_active (data->show_bars_checkbox, TRUE);
 
             update_sensitivity (data);
         });
 }
 
-//static void
-//setup_color_mode_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> &data)
-//{
-//    const std::vector<std::string> items = {
-//        _("Solid"),
-//        _("Gradient"),
-//        _("Fire"),
-//    };
-//
-//    data->color_mode_combobox = create_drop_down (
-//        vbox, sg, _("Color mode: "), items, data->base->color_mode,
-//        [data](GtkComboBox *combo) {
-//            CPUHeatmap::set_color_mode (data->base, gtk_combo_box_get_active (combo));
-//            update_sensitivity (data);
-//        });
-//}
+
 
 static void
 change_color (GtkColorButton *button, const Ptr<CPUHeatmap> &base, CPUHeatmapColorNumber number)
@@ -500,15 +386,13 @@ change_color (GtkColorButton *button, const Ptr<CPUHeatmap> &base, CPUHeatmapCol
     CPUHeatmap::set_color (base, number, xfce4::gtk_get_rgba (button));
 }
 
+
 static void
 update_sensitivity (const Ptr<CPUHeatmapOptions> &data, bool initial)
 {
     const Ptr<CPUHeatmap> base = data->base;
     const bool default_command = base->command.empty();
-//    const bool per_core = base->nr_cores > 1 && base->tracked_core == 0 && base->mode != MODE_DISABLED;
 
-//    gtk_widget_set_sensitive (GTK_WIDGET (data->hbox_highlight_smt),
-//                              base->has_bars && base->topology && base->topology->smt);
     gtk_widget_set_sensitive (GTK_WIDGET (data->hbox_in_terminal), !default_command);
     gtk_widget_set_sensitive (GTK_WIDGET (data->hbox_startup_notification), !default_command);
     if (initial)
@@ -521,75 +405,6 @@ update_sensitivity (const Ptr<CPUHeatmapOptions> &data, bool initial)
         gtk_widget_set_visible (GTK_WIDGET (data->hbox_in_terminal), true);
         gtk_widget_set_visible (GTK_WIDGET (data->hbox_startup_notification), true);
     }
-//    gtk_widget_set_sensitive (GTK_WIDGET (data->per_core), per_core);
-//    gtk_widget_set_sensitive (GTK_WIDGET (data->hbox_per_core_spacing), per_core && base->per_core);
-
-
-//    gtk_widget_set_sensitive (gtk_widget_get_parent (data->color_mode_combobox),
-//                              base->mode != MODE_DISABLED );
 }
 
-static xfce4::TimeoutResponse
-update_cb (const Ptr<CPUHeatmapOptions> &data)
-{
-    const Ptr<CPUHeatmap> base = data->base;
-    std::string smt_text;
-    bool show_tooltip = false;
 
-//    if (base->topology)
-//    {
-//        const gchar *const smt_detected = base->topology->smt ? _("SMT detected: Yes") : _("SMT detected: No");
-//
-//        if (base->topology->smt || base->stats.num_smt_incidents != 0)
-//        {
-//            gdouble slowdown_overall = 0;
-//            gdouble slowdown_hotspots = 0;
-//
-//            gdouble actual = base->stats.num_instructions_executed.total.actual;
-//            gdouble optimal = base->stats.num_instructions_executed.total.optimal;
-//            if (actual != 0)
-//            {
-//                slowdown_overall = 100.0 * (optimal - actual) / actual;
-//                slowdown_overall = round (slowdown_overall * 100) / 100;
-//            }
-//
-//            actual = base->stats.num_instructions_executed.during_smt_incidents.actual;
-//            optimal = base->stats.num_instructions_executed.during_smt_incidents.optimal;
-//            if (actual != 0)
-//            {
-//                slowdown_hotspots = 100.0 * (optimal - actual) / actual;
-//                slowdown_hotspots = round (slowdown_hotspots * 100) / 100;
-//            }
-//
-////            smt_text = std::string() +
-////                smt_detected + "\n" +
-////                xfce4::sprintf (_("Number of SMT scheduling incidents: %u"), base->stats.num_smt_incidents) + "\n";
-//
-////            if (base->stats.num_smt_incidents != 0)
-////            {
-////                smt_text += std::string() +
-////                    _("Estimated performance impact:") + "\n" +
-////                    "\t" + xfce4::sprintf (_("Overall: %.3g%%"), slowdown_overall) + "\n" +
-////                    "\t" + xfce4::sprintf (_("Hotspots: %.3g%%"), slowdown_hotspots) + "\n";
-////
-////                show_tooltip = true;
-////            }
-//        }
-//        else
-//        {
-////            smt_text = smt_detected;
-//        }
-//    }
-//    else
-//    {
-////        smt_text = _("SMT detected: N/A");
-//    }
-//
-////    if (gtk_label_get_text (data->smt_stats) != smt_text)
-////    {
-////        gtk_label_set_text (data->smt_stats, smt_text.c_str());
-////        gtk_widget_set_tooltip_text (GTK_WIDGET (data->smt_stats), show_tooltip ? data->smt_stats_tooltip().c_str() : "");
-////    }
-
-    return xfce4::TIMEOUT_AGAIN;
-}
