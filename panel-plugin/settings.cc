@@ -50,7 +50,7 @@ static const gchar *const color_keys[NUM_COLORS] =
 void
 read_settings (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
 {
-    CPUHeatmapUpdateRate rate = RATE_100MS;
+    CPUHeatmapUpdateRate rate = RATE_300MS;
     CPUHeatmapMode mode = MODE_HEATMAP;
     bool border = true;
     bool frame = false;
@@ -98,6 +98,7 @@ read_settings (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
         }
     }
 
+
     // Validate settings
     {
         switch (mode)
@@ -126,14 +127,16 @@ read_settings (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
     }
 
     CPUHeatmap::set_border (base, border);
-    for (guint i = 0; i < NUM_COLORS; i++)
+    for (guint i = 0; i < NUM_COLORS; i++){
         CPUHeatmap::set_color (base, (CPUHeatmapColorNumber) i, colors[i]);
+    }
     CPUHeatmap::set_command (base, command);
     CPUHeatmap::set_in_terminal (base, in_terminal);
     CPUHeatmap::set_frame (base, frame);
     CPUHeatmap::set_mode (base, mode);
     CPUHeatmap::set_size (base, size);
     CPUHeatmap::set_startup_notification (base, startup_notification);
+    CPUHeatmap::set_update_rate(base, rate);
 }
 
 
@@ -152,16 +155,16 @@ write_settings (XfcePanelPlugin *plugin, const Ptr<const CPUHeatmap> &base)
     if (!rc)
         return;
 
-    rc->write_default_int_entry ("UpdateInterval", base->update_interval, RATE_100MS);
+    rc->write_int_entry ("UpdateInterval", base->update_interval);
+    rc->write_int_entry ("Mode", base->mode);
     rc->write_int_entry ("Size", base->size);
-    rc->write_default_int_entry ("Mode", base->mode, MODE_HEATMAP);
     rc->write_int_entry ("Frame", base->has_frame ? 1 : 0);
     rc->write_int_entry ("Border", base->has_border ? 1 : 0);
     rc->write_default_entry ("Command", base->command, "");
     rc->write_int_entry ("InTerminal", base->command_in_terminal ? 1 : 0);
     rc->write_int_entry ("StartupNotification", base->command_startup_notification ? 1 : 0);
 
-    for (guint i = 0; i < NUM_COLORS; i++)
+    for (guint i=0; i<NUM_COLORS; i++)
     {
         const gchar *key = color_keys[i];
 

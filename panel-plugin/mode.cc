@@ -134,8 +134,6 @@ draw_graph_heatmap (const Ptr<CPUHeatmap> &base, cairo_t *cr, gint w, gint h)
     // il resto del codice dovrebbe assicurarsi di chiamare questa
     // solo per il core 0... ma se non lo fa, evitiamo di disegnare
 
-    fprintf(stderr, "draw_graph_heatmap h %d\n", h );
-
     const int cores = base->history.data.size();
 
     // bars:

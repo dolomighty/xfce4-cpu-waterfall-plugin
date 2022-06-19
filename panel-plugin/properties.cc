@@ -60,6 +60,7 @@ struct CPUHeatmapOptions
     }
 };
 
+
 static GtkBox*    create_tab ();
 static GtkLabel*  create_label_line (GtkBox *tab, const gchar *text);
 static GtkBox*    create_option_line (GtkBox *tab, GtkSizeGroup *sg, const gchar *name, const gchar *tooltip);
@@ -129,25 +130,24 @@ create_options (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
             update_sensitivity (dlg_data);
         });
 
-    const gchar *smt_issues_tooltip = _("Color used to highlight potentially suboptimal\nplacement of threads on CPUs with SMT");
 
-    gtk_box_pack_start (vbox, gtk_separator_new (GTK_ORIENTATION_HORIZONTAL), FALSE, FALSE, BORDER/2);
-
-    gtk_box_pack_start (vbox, gtk_separator_new (GTK_ORIENTATION_HORIZONTAL), FALSE, FALSE, BORDER/2);
 
     GtkBox *vbox2 = create_tab ();
+    setup_color_option (vbox2, sg, dlg_data, BG_COLOR, _("Background:"), NULL, [base](GtkColorButton *button) {
+        change_color (button, base, BG_COLOR);
+    });
     setup_color_option (vbox2, sg, dlg_data, FG_COLOR1, _("Color 1:"), NULL, [base](GtkColorButton *button) {
         change_color (button, base, FG_COLOR1);
     });
     setup_color_option (vbox2, sg, dlg_data, FG_COLOR2, _("Color 2:"), NULL, [base](GtkColorButton *button) {
         change_color (button, base, FG_COLOR2);
     });
-    setup_color_option (vbox2, sg, dlg_data, BG_COLOR, _("Background:"), NULL, [base](GtkColorButton *button) {
-        change_color (button, base, BG_COLOR);
-    });
     setup_mode_option (vbox2, sg, dlg_data);
+
+
+
     gtk_box_pack_start (vbox2, gtk_separator_new (GTK_ORIENTATION_HORIZONTAL), FALSE, FALSE, BORDER/2);
-    gtk_box_pack_start (vbox2, gtk_separator_new (GTK_ORIENTATION_HORIZONTAL), FALSE, FALSE, BORDER/2);
+
     create_check_box (vbox2, sg, _("Show frame"), base->has_frame, NULL,
         [dlg_data](GtkToggleButton *button) {
             CPUHeatmap::set_frame (dlg_data->base, gtk_toggle_button_get_active (button));
@@ -325,6 +325,8 @@ setup_command_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOption
 }
 
 
+
+
 static void
 setup_color_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> &data,
                     CPUHeatmapColorNumber number, const gchar *name, const gchar *tooltip,
@@ -351,8 +353,8 @@ setup_mode_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> 
     gint selected = 0;
     switch (data->base->mode)
     {
-        case MODE_DISABLED:   selected = 0; break;
-        case MODE_HEATMAP:    selected = 1; break;
+        case MODE_DISABLED: selected = 0; break;
+        case MODE_HEATMAP:  selected = 1; break;
     }
 
     create_drop_down (vbox, sg, _("Mode:"), items, selected,
@@ -395,15 +397,19 @@ update_sensitivity (const Ptr<CPUHeatmapOptions> &data, bool initial)
 
     gtk_widget_set_sensitive (GTK_WIDGET (data->hbox_in_terminal), !default_command);
     gtk_widget_set_sensitive (GTK_WIDGET (data->hbox_startup_notification), !default_command);
+
     if (initial)
     {
         gtk_widget_set_visible (GTK_WIDGET (data->hbox_in_terminal), !default_command);
         gtk_widget_set_visible (GTK_WIDGET (data->hbox_startup_notification), !default_command);
+        return;
     }
-    else if (!default_command)
+    
+    if (!default_command)
     {
         gtk_widget_set_visible (GTK_WIDGET (data->hbox_in_terminal), true);
         gtk_widget_set_visible (GTK_WIDGET (data->hbox_startup_notification), true);
+        return;
     }
 }
 

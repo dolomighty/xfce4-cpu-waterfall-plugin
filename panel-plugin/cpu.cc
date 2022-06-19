@@ -45,7 +45,7 @@ using xfce4::TooltipTime;
 /* vim: !sort -k3 */
 static void          about_cb       ();
 static Propagation   command_cb     (GdkEventButton *event, const Ptr<CPUHeatmap> &base);
-static Ptr<CPUHeatmap> create_gui     (XfcePanelPlugin *plugin);
+static Ptr<CPUHeatmap> create_gui   (XfcePanelPlugin *plugin);
 static Propagation   draw_area_cb   (cairo_t *cr, const Ptr<CPUHeatmap> &base);
 static void          mode_cb        (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base);
 static void          shutdown       (const Ptr<CPUHeatmap> &base);
