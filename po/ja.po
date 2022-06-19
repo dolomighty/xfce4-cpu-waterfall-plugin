@@ -44,7 +44,7 @@ msgid ""
 msgstr "「ホットスポット」は、準最適SMTスケジューリングの決定に関するスレッドのみに対する瞬間的なパフォーマンスの影響を示しています。"
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Graph Properties"
+msgid "CPU Heatmap Properties"
 msgstr "CPU グラフプロパティ"
 
 #: ../panel-plugin/properties.cc:108
@@ -262,5 +262,5 @@ msgid "SMT detected: N/A"
 msgstr "SMTの有無: 利用不可"
 
 #: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Graph"
+msgid "CPU Heatmap"
 msgstr "CPU グラフ"

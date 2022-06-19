@@ -44,7 +44,7 @@ msgid ""
 msgstr "„Горещи точки“ показва моментното въздействие върху производителността само върху нишките, участващи в решенията за неоптимално планиране на SMT."
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Graph Properties"
+msgid "CPU Heatmap Properties"
 msgstr "Свойства на Графиката на ЦП"
 
 #: ../panel-plugin/properties.cc:108
@@ -263,5 +263,5 @@ msgid "SMT detected: N/A"
 msgstr "Засечен SMT: Няма налична информация"
 
 #: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Graph"
+msgid "CPU Heatmap"
 msgstr "Графика на ЦП"

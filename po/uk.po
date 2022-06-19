@@ -45,7 +45,7 @@ msgid ""
 msgstr "'Гарячі точки' показує моментний вплив на продуктивність задіяних потоків у неоптимальних запланованих рішеннях SMT."
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Graph Properties"
+msgid "CPU Heatmap Properties"
 msgstr "Налаштування шкали ЦП"
 
 #: ../panel-plugin/properties.cc:108
@@ -266,5 +266,5 @@ msgid "SMT detected: N/A"
 msgstr "SMT виявлено: N/A"
 
 #: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Graph"
+msgid "CPU Heatmap"
 msgstr "Шкала ЦП"

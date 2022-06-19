@@ -46,7 +46,7 @@ msgid ""
 msgstr "'热点' 仅显示对次优 SMT 调度决策中涉及的线程的瞬时性能影响."
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Graph Properties"
+msgid "CPU Heatmap Properties"
 msgstr "CPU 图像属性"
 
 #: ../panel-plugin/properties.cc:108
@@ -264,5 +264,5 @@ msgid "SMT detected: N/A"
 msgstr "检测到SMT：N/A"
 
 #: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Graph"
+msgid "CPU Heatmap"
 msgstr "CPU 图像"

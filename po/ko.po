@@ -43,7 +43,7 @@ msgid ""
 msgstr "'활성' 은 차선의 SMT 스케쥴링 결정에 기여하는 스레드에 대해서만 영향을 주는 집중적 성능 추세를 나타냅니다."
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Graph Properties"
+msgid "CPU Heatmap Properties"
 msgstr "CPU 그래프 속성"
 
 #: ../panel-plugin/properties.cc:108
@@ -261,5 +261,5 @@ msgid "SMT detected: N/A"
 msgstr "SMT 감지: 불가능"
 
 #: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Graph"
+msgid "CPU Heatmap"
 msgstr "CPU 그래프"

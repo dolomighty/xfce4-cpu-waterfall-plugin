@@ -1,7 +1,7 @@
 [Xfce Panel]
 Type=X-XFCE-PanelPlugin
 Encoding=UTF-8
-_Name=CPU Graph
+_Name=CPU Heatmap
 _Comment=Graphical representation of the CPU load
 Icon=org.xfce.panel.cpuheatmap
 X-XFCE-Module=cpuheatmap

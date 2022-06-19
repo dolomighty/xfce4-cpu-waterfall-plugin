@@ -49,7 +49,7 @@ msgid ""
 msgstr "«Горячие точки» показывают кратковременное влияние производительности только на потоки, участвующие в неоптимальных решениях по планированию SMT."
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Graph Properties"
+msgid "CPU Heatmap Properties"
 msgstr "Параметры модуля График процессора"
 
 #: ../panel-plugin/properties.cc:108
@@ -270,5 +270,5 @@ msgid "SMT detected: N/A"
 msgstr "SMT обнаружен: Н/Д"
 
 #: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Graph"
+msgid "CPU Heatmap"
 msgstr "График процессора"

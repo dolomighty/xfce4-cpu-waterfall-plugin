@@ -44,7 +44,7 @@ msgid ""
 msgstr "'נקודות חמות' מציג את ההשפעה הרגעית על הביצועים רק של הליכי המשנה המעורבים בהחלטות תזמון ריבוי הליכי משנה בו זמניים תת מיטביות."
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Graph Properties"
+msgid "CPU Heatmap Properties"
 msgstr "מאפייני גרף מעבד"
 
 #: ../panel-plugin/properties.cc:108
@@ -265,5 +265,5 @@ msgid "SMT detected: N/A"
 msgstr "גילוי ריבוי הליכי משנה בו זמניים: לא זמין"
 
 #: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Graph"
+msgid "CPU Heatmap"
 msgstr "גרף מעבד"

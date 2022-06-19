@@ -43,8 +43,8 @@ msgid ""
 msgstr "'Brandpunten' toont het tijdelijke prestatie-effect op uitsluitend die draden die betrokken zijn bij niet-optimale SMT-inroosteringsbesluiten."
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Graph Properties"
-msgstr "Eigenschappen van CPU Graph"
+msgid "CPU Heatmap Properties"
+msgstr "Eigenschappen van CPU Heatmap"
 
 #: ../panel-plugin/properties.cc:108
 msgid "_Close"
@@ -262,5 +262,5 @@ msgid "SMT detected: N/A"
 msgstr "SMT bespeurd: N/B"
 
 #: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Graph"
-msgstr "CPU Graph"
+msgid "CPU Heatmap"
+msgstr "CPU Heatmap"

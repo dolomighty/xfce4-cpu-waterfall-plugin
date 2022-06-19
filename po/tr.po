@@ -49,8 +49,8 @@ msgid ""
 msgstr "'Sıcak noktalar', yalnızca standart altı SMT zamanlama kararları veren iş parçacıklarının anlık performans etkisini gösterir."
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Graph Properties"
-msgstr "CPU Graph Özellikleri"
+msgid "CPU Heatmap Properties"
+msgstr "CPU Heatmap Özellikleri"
 
 #: ../panel-plugin/properties.cc:108
 msgid "_Close"
@@ -268,5 +268,5 @@ msgid "SMT detected: N/A"
 msgstr "SMT saptandı: Uygulanamaz"
 
 #: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Graph"
+msgid "CPU Heatmap"
 msgstr "İşlemci Grafiği"

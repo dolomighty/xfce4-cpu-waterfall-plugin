@@ -47,7 +47,7 @@ msgid ""
 msgstr "«Flaskehalser» viser hvordan trådene i den ineffektive SMT-planleggingen påvirkes momentant."
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Graph Properties"
+msgid "CPU Heatmap Properties"
 msgstr "Egenskaper for prosessorgraf"
 
 #: ../panel-plugin/properties.cc:108
@@ -266,5 +266,5 @@ msgid "SMT detected: N/A"
 msgstr "Gjenkjente SMT: I/t"
 
 #: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Graph"
+msgid "CPU Heatmap"
 msgstr "Prosessorgraf"

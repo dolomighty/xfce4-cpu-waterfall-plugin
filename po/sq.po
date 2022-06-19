@@ -45,7 +45,7 @@ msgid ""
 msgstr "“Hotspots” tregon ndikimin atë çast mbi punimin thjesht te rrjedha të përfshira në vendime nënoptimale planifikimi SMT."
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Graph Properties"
+msgid "CPU Heatmap Properties"
 msgstr "Veti grafiku CPU-je"
 
 #: ../panel-plugin/properties.cc:108
@@ -264,5 +264,5 @@ msgid "SMT detected: N/A"
 msgstr "U pikas SMT: N/A"
 
 #: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Graph"
+msgid "CPU Heatmap"
 msgstr "Grafik i CPU-së"

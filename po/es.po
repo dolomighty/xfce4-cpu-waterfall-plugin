@@ -48,7 +48,7 @@ msgid ""
 msgstr "«Puntos calientes» muestra solo el impacto momentáneo en el rendimiento de los subprocesos implicados en las decisiones de planificación SMT subóptimas."
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Graph Properties"
+msgid "CPU Heatmap Properties"
 msgstr "Propiedades del gráfico del procesador"
 
 #: ../panel-plugin/properties.cc:108
@@ -267,5 +267,5 @@ msgid "SMT detected: N/A"
 msgstr "SMT detectado: N/D"
 
 #: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Graph"
+msgid "CPU Heatmap"
 msgstr "Gráfico del procesador"

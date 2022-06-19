@@ -46,7 +46,7 @@ msgid ""
 msgstr "「熱點」僅顯示對次佳 SMT 調度決策中涉及執行緒的瞬時效能影響。"
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Graph Properties"
+msgid "CPU Heatmap Properties"
 msgstr "CPU 圖表屬性"
 
 #: ../panel-plugin/properties.cc:108
@@ -264,5 +264,5 @@ msgid "SMT detected: N/A"
 msgstr "偵測到 SMT：N/A"
 
 #: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Graph"
+msgid "CPU Heatmap"
 msgstr "CPU 圖表"

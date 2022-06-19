@@ -43,7 +43,7 @@ msgid ""
 msgstr "'Žarišča' prikazujejo vplive niti, ki so udeležene v neoptimalno časovno razporejanje SMT, na trenutno zmanjšanje zmogljivosti."
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Graph Properties"
+msgid "CPU Heatmap Properties"
 msgstr "Lastnosti grafa procesorja"
 
 #: ../panel-plugin/properties.cc:108
@@ -264,5 +264,5 @@ msgid "SMT detected: N/A"
 msgstr "Zaznan SMT: ni na voljo"
 
 #: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Graph"
+msgid "CPU Heatmap"
 msgstr "Graf procesorja"

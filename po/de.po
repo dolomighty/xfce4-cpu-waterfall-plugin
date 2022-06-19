@@ -45,7 +45,7 @@ msgid ""
 msgstr "'Brennpunkte' zeigt die momentanen Leistungsauswirkungen auf nur die Threads, die an suboptimalen SMT-Planungsentscheidungen beteiligt sind."
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Graph Properties"
+msgid "CPU Heatmap Properties"
 msgstr "Eigenschaften für CPU-Diagramm"
 
 #: ../panel-plugin/properties.cc:108
@@ -264,5 +264,5 @@ msgid "SMT detected: N/A"
 msgstr "SMT erkannt: N/A"
 
 #: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Graph"
+msgid "CPU Heatmap"
 msgstr "CPU-Diagramm"

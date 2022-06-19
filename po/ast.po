@@ -32,7 +32,7 @@ msgid "Usage: %u%%"
 msgstr "Usu: %u%%"
 
 #: ../panel-plugin/properties.cc:80
-msgid "CPU Graph Properties"
+msgid "CPU Heatmap Properties"
 msgstr "Propiedaes del gráficu CPU"
 
 #: ../panel-plugin/properties.cc:98
@@ -166,5 +166,5 @@ msgid "Color mode: "
 msgstr "Mou de color:"
 
 #: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Graph"
+msgid "CPU Heatmap"
 msgstr "Gráfica de CPU"

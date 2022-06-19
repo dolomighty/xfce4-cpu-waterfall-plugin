@@ -44,7 +44,7 @@ msgid ""
 msgstr "'เฉพาะจุด' แสดงผลกระทบด้านสมรรถนะชั่วคราวที่มีผลต่อเธรดที่เกี่ยวข้องเท่านั้น จากการเลือกจัดเวลาที่ด้อยประสิทธิภาพของ SMT"
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Graph Properties"
+msgid "CPU Heatmap Properties"
 msgstr "คุณสมบัติของกราฟซีพียู"
 
 #: ../panel-plugin/properties.cc:108
@@ -262,5 +262,5 @@ msgid "SMT detected: N/A"
 msgstr "ตรวจพบ SMT: ไม่ทราบ"
 
 #: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Graph"
+msgid "CPU Heatmap"
 msgstr "กราฟซีพียู"

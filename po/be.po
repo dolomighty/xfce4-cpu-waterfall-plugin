@@ -46,8 +46,8 @@ msgid ""
 msgstr "Значэнне \"Па пунктах\" паказвае імгненны ўплыў на прадукцыйнасць струменяў, якія ўдзельнічаюць у неаптымальных рашэннях планавання адначасовай шматструменевасці (SMT)."
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Graph Properties"
-msgstr "Уласцівасці CPU Graph"
+msgid "CPU Heatmap Properties"
+msgstr "Уласцівасці CPU Heatmap"
 
 #: ../panel-plugin/properties.cc:108
 msgid "_Close"
@@ -267,5 +267,5 @@ msgid "SMT detected: N/A"
 msgstr "Падтрымка SMT: не вызначана"
 
 #: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Graph"
+msgid "CPU Heatmap"
 msgstr "Графікі ЦП"

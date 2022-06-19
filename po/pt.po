@@ -45,7 +45,7 @@ msgid ""
 msgstr "'Hotspots' está a mostrar o impacto momentâneo de desempenho apenas nos threads envolvidos em decisões de programação SMT abaixo do ideal."
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Graph Properties"
+msgid "CPU Heatmap Properties"
 msgstr "Propriedades do gráfico da CPU"
 
 #: ../panel-plugin/properties.cc:108
@@ -264,5 +264,5 @@ msgid "SMT detected: N/A"
 msgstr "SMT detetado: N/A"
 
 #: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Graph"
+msgid "CPU Heatmap"
 msgstr "Gráfico da CPU"

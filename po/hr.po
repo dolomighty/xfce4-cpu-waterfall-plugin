@@ -45,7 +45,7 @@ msgid ""
 msgstr ""
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Graph Properties"
+msgid "CPU Heatmap Properties"
 msgstr "Svojstva CPU grafa"
 
 #: ../panel-plugin/properties.cc:108
@@ -265,5 +265,5 @@ msgid "SMT detected: N/A"
 msgstr ""
 
 #: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Graph"
+msgid "CPU Heatmap"
 msgstr "CPU graf"

@@ -32,8 +32,8 @@ msgid "Usage: %u%%"
 msgstr "Mức sử dụng: %u%%"
 
 #: ../panel-plugin/properties.cc:132
-msgid "CPU Graph Properties"
-msgstr "Thuộc tính CPU Graph"
+msgid "CPU Heatmap Properties"
+msgstr "Thuộc tính CPU Heatmap"
 
 #: ../panel-plugin/properties.cc:149
 msgid "Use non-linear time-scale"
@@ -173,5 +173,5 @@ msgid "Color mode: "
 msgstr "Chế độ màu"
 
 #: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Graph"
-msgstr "CPU Graph"
+msgid "CPU Heatmap"
+msgstr "CPU Heatmap"

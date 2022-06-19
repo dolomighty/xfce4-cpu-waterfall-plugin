@@ -45,7 +45,7 @@ msgid ""
 msgstr "'Puntos de interese' está a amosar o impacto momentáneo no rendemento só nos fíos implicados nas decisións de planificación SMT subóptimas."
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Graph Properties"
+msgid "CPU Heatmap Properties"
 msgstr "Propiedades da gráfica da CPU"
 
 #: ../panel-plugin/properties.cc:108
@@ -264,5 +264,5 @@ msgid "SMT detected: N/A"
 msgstr "Detectado SMT: N/D"
 
 #: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Graph"
+msgid "CPU Heatmap"
 msgstr "Gráfica da CPU"

@@ -45,7 +45,7 @@ msgid ""
 msgstr "„Hotspoty“ zobrazujú okamžitý vplyv na výkon iba v tých vláknach, ktoré sú súčasťou neoptimálnych rozhodnutí SMT plánovania."
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Graph Properties"
+msgid "CPU Heatmap Properties"
 msgstr "Vlastnosti grafu procesora"
 
 #: ../panel-plugin/properties.cc:108
@@ -266,5 +266,5 @@ msgid "SMT detected: N/A"
 msgstr "SMT zistené: detekcia SMT nie je podporovaná"
 
 #: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Graph"
+msgid "CPU Heatmap"
 msgstr "Graf procesora"
