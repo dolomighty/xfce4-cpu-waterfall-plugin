@@ -148,36 +148,55 @@ draw_graph_heatmap (const Ptr<CPUHeatmap> &base, cairo_t *cr, gint w, gint h)
     unsigned char *bgra_pixmap = cairo_image_surface_get_data(surf);
     cairo_surface_flush(surf);
 
-    int bars=cores+1;   // la avg la facciamo alta il doppio
+    // solo i cores reali
+    int bars=cores-1;   // cores = average pseudocore + cores
     int bar=0;
 
-    for( int core=0; core<1; core++, bar++ ) 
-    {
-        // leggiamo solo l'ultimo valore del core
-        const CpuLoad *data = base->history.data[core];
-        const gssize mask = base->history.mask();
-        const int off = base->history.offset;
+    if(base->has_average){
+        bars=cores+1;   // la avg la facciamo alta il doppio
 
-        xfce4::RGBA c = lerp_RGBA_table(base->colors, NUM_COLORS, data[off&mask].value);
-        const int b = 255*c.B;
-        const int g = 255*c.G;
-        const int r = 255*c.R;
+        for( int core=0; core<1; core++, bar++ ) 
+        {
+            // leggiamo solo l'ultimo valore del core
+            const CpuLoad *data = base->history.data[core];
+            const gssize mask = base->history.mask();
+            const int off = base->history.offset;
 
-        // disegnamo un segmento verticale
-        int y0=h*(bar+0)/bars;
-        int y1=h*(bar+1)/bars;
-        
-        unsigned char *bgr = &bgra_pixmap[y0*stride+x*4];
+            xfce4::RGBA c = lerp_RGBA_table(base->colors, NUM_COLORS, data[off&mask].value);
+            int b = 255*c.B;
+            int g = 255*c.G;
+            int r = 255*c.R;
 
-        for( int y=y0; y<y1; y++, bgr+=stride ){
-            bgr[0]=b;
-            bgr[1]=g;
-            bgr[2]=r;
+            // disegnamo un segmento verticale
+            int y0=h*(bar+0)/bars;
+            int y1=h*(bar+1)/bars;
+            
+            unsigned char *bgr = &bgra_pixmap[y0*stride+x*4];
+
+            for( int y=y0; y<y1; y++, bgr+=stride ){
+                bgr[0]=b;
+                bgr[1]=g;
+                bgr[2]=r;
+            }
+
+            // disegnamo un segmento verticale
+            bar++;
+            y0=h*(bar+0)/bars;
+            y1=h*(bar+1)/bars;
+            b = 255*base->colors[BG_COLOR].B;
+            g = 255*base->colors[BG_COLOR].G;
+            r = 255*base->colors[BG_COLOR].R;
+
+            for( int y=y0; y<y1; y++, bgr+=stride ){
+                bgr[0]=b;
+                bgr[1]=g;
+                bgr[2]=r;
+            }
         }
     }
 
-    bar++;  // saltiamo una barra
 
+    // cores reali
     for( int core=1; core<cores; core++, bar++ ) 
     {
         // leggiamo solo l'ultimo valore del core
@@ -202,6 +221,7 @@ draw_graph_heatmap (const Ptr<CPUHeatmap> &base, cairo_t *cr, gint w, gint h)
             bgr[2]=r;
         }
     }
+
 
     cairo_surface_mark_dirty(surf);
 

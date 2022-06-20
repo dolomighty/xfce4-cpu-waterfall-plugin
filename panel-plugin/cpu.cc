@@ -513,6 +513,17 @@ CPUHeatmap::set_border (const Ptr<CPUHeatmap> &base, bool has_border)
 
 
 void
+CPUHeatmap::set_average (const Ptr<CPUHeatmap> &base, bool has_average )
+{
+    if (base->has_average != has_average)
+    {
+        base->has_average = has_average;
+        size_cb (base->plugin, xfce_panel_plugin_get_size (base->plugin), base);
+    }
+}
+
+
+void
 CPUHeatmap::set_frame (const Ptr<CPUHeatmap> &base, bool has_frame)
 {
     base->has_frame = has_frame;

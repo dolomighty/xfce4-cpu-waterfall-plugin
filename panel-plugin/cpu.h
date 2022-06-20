@@ -105,6 +105,7 @@ struct CPUHeatmap
     bool command_startup_notification:1;
     bool has_border:1;
     bool has_frame:1;
+    bool has_average:1;
 
     /* Runtime data */
     guint nr_cores;
@@ -131,6 +132,7 @@ struct CPUHeatmap
     static void set_size                 (const Ptr<CPUHeatmap> &base, guint width);
     static void set_startup_notification (const Ptr<CPUHeatmap> &base, bool startup_notification);
     static void set_update_rate          (const Ptr<CPUHeatmap> &base, CPUHeatmapUpdateRate rate);
+    static void set_average              (const Ptr<CPUHeatmap> &base, bool has_average );
 };
 
 guint get_update_interval_ms (CPUHeatmapUpdateRate rate);

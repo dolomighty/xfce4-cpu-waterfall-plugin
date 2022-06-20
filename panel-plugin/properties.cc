@@ -151,12 +151,18 @@ create_options (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
     create_check_box (vbox2, sg, _("Show frame"), base->has_frame, NULL,
         [dlg_data](GtkToggleButton *button) {
             CPUHeatmap::set_frame (dlg_data->base, gtk_toggle_button_get_active (button));
-            update_sensitivity (dlg_data);
+//            update_sensitivity (dlg_data);
         });
     create_check_box (vbox2, sg, _("Show border"), base->has_border, NULL,
         [dlg_data](GtkToggleButton *button) {
             CPUHeatmap::set_border (dlg_data->base, gtk_toggle_button_get_active (button));
-            update_sensitivity (dlg_data);
+//            update_sensitivity (dlg_data);
+        });
+
+    create_check_box (vbox2, sg, _("Show average"), base->has_average, NULL,
+        [dlg_data](GtkToggleButton *button) {
+            CPUHeatmap::set_average (dlg_data->base, gtk_toggle_button_get_active (button));
+//            update_sensitivity (dlg_data);
         });
 
     GtkWidget *notebook = gtk_notebook_new ();

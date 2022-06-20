@@ -55,6 +55,7 @@ read_settings (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
     CPUHeatmapMode mode = MODE_HEATMAP;
     bool border = true;
     bool frame = false;
+    bool has_average = true;
 
     xfce4::RGBA colors[NUM_COLORS];
     std::string command;
@@ -82,6 +83,7 @@ read_settings (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
             in_terminal = rc->read_int_entry ("InTerminal", in_terminal);
             startup_notification = rc->read_int_entry ("StartupNotification", startup_notification);
             border = rc->read_int_entry ("Border", border);
+            has_average = rc->read_int_entry ("has_average", has_average);
 
             if ((value = rc->read_entry ("Command", NULL))) {
                 command = *value;
@@ -138,6 +140,7 @@ read_settings (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
     CPUHeatmap::set_size (base, size);
     CPUHeatmap::set_startup_notification (base, startup_notification);
     CPUHeatmap::set_update_rate(base, rate);
+    CPUHeatmap::set_average(base, has_average);
 }
 
 
@@ -164,6 +167,7 @@ write_settings (XfcePanelPlugin *plugin, const Ptr<const CPUHeatmap> &base)
     rc->write_default_entry ("Command", base->command, "");
     rc->write_int_entry ("InTerminal", base->command_in_terminal ? 1 : 0);
     rc->write_int_entry ("StartupNotification", base->command_startup_notification ? 1 : 0);
+    rc->write_int_entry ("has_average", base->has_average ? 1 : 0);
 
     for (guint i=0; i<NUM_COLORS; i++)
     {
