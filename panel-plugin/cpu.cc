@@ -219,7 +219,7 @@ static void
 resize_history (const Ptr<CPUHeatmap> &base, gssize history_size)
 {
     const guint fastest = get_update_interval_ms (RATE_100MS);
-    const guint slowest = get_update_interval_ms (RATE_3S);
+    const guint slowest = get_update_interval_ms (RATE_2S);
     const gssize old_cap_pow2 = base->history.cap_pow2;
 
     gssize cap_pow2 = 1;
@@ -465,12 +465,11 @@ get_update_interval_ms (CPUHeatmapUpdateRate rate)
     switch (rate)
     {
         case RATE_100MS: return 100;
-        case RATE_300MS: return 300;
+        case RATE_200MS: return 200;
         case RATE_500MS: return 500;
         case RATE_1S:    return 1000;
-        case RATE_3S:    return 3000;
-        default:
-            return 100;
+        case RATE_2S:    return 2000;
+        default:         return 200;
     }
 }
 

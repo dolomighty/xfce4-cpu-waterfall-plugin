@@ -267,10 +267,10 @@ setup_update_interval_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatm
 {
     const std::vector<std::string> items = {
         _("~100ms"),
-        _("~300ms"),
+        _("~200ms"),
         _("~500ms"),
         _("~1s"),
-        _("~3s")
+        _("~2s")
     };
 
     create_drop_down (vbox, sg, _("Update Interval:"), items, data->base->update_interval,

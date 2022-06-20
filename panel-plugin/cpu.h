@@ -55,10 +55,10 @@ enum CPUHeatmapMode
 enum CPUHeatmapUpdateRate
 {
     RATE_100MS = 0,
-    RATE_300MS = 1,
+    RATE_200MS = 1,
     RATE_500MS = 2,
     RATE_1S    = 3,
-    RATE_3S    = 4,
+    RATE_2S    = 4,
 };
 
 enum CPUHeatmapColorNumber

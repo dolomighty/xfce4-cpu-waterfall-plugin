@@ -129,30 +129,6 @@ msgstr "Avanzate"
 msgid "Stats"
 msgstr "Statistiche"
 
-#: ../panel-plugin/properties.cc:321
-msgid "Fastest (~100ms)"
-msgstr "Il Più veloce (~100ms)"
-
-#: ../panel-plugin/properties.cc:321
-msgid "Faster (~250ms)"
-msgstr "Più veloce (~250ms)"
-
-#: ../panel-plugin/properties.cc:322
-msgid "Fast (~500ms)"
-msgstr "Veloce (~500ms)"
-
-#: ../panel-plugin/properties.cc:323
-msgid "Normal (~750ms)"
-msgstr "Normale (~750ms)"
-
-#: ../panel-plugin/properties.cc:324
-msgid "Slow (~1s)"
-msgstr "Lento (~1s)"
-
-#: ../panel-plugin/properties.cc:325
-msgid "Slowest (~3s)"
-msgstr "Più lento (~3s)"
-
 #: ../panel-plugin/properties.cc:328
 msgid "Update Interval:"
 msgstr "Intervallo di aggiornamento:"

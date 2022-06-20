@@ -30,15 +30,15 @@
 #include <stdlib.h>
 #include "mode.h"
 
-struct Point
-{
-    gfloat x, y;
-    Point() : x(0), y(0) {}
-    Point(gfloat _x, gfloat _y) : x(_x), y(_y) {}
-};
+// amo assert e la voglio pure in release
+#undef NDEBUG
+#include <assert.h>
+
+
+
 
 static xfce4::RGBA
-mix_colors (gdouble ratio, const xfce4::RGBA &color1, const xfce4::RGBA &color2)
+lerp_RGBA (const xfce4::RGBA &color1, const xfce4::RGBA &color2, gdouble ratio)
 {
     return color1 + ratio * (color2 - color1);
 }
@@ -48,13 +48,12 @@ mix_colors (gdouble ratio, const xfce4::RGBA &color1, const xfce4::RGBA &color2)
 
 
 
-
-#include <assert.h>
-
 static xfce4::RGBA
-lerp_rgb ( xfce4::RGBA *colors, int n, float ratio )
+lerp_RGBA_table ( xfce4::RGBA *colors, int n, float ratio )
 {
-    assert((int)1.1==(int)floor(1.1));
+    assert(n>0);
+    assert(colors);
+    assert((int)+1.1==(int)floor(+1.1));
 
     if(ratio<0)ratio=0;
     if(ratio>1)ratio=1;
@@ -67,8 +66,8 @@ lerp_rgb ( xfce4::RGBA *colors, int n, float ratio )
     int i0 = i1;
     i1++; if(i1>n)i1=n;
 
-    return mix_colors(ratio,colors[i0],colors[i1]);
-//    return colors[i1];
+    return lerp_RGBA(colors[i0],colors[i1],ratio);
+//    return colors[i1];    // test
 }
 
 
@@ -84,38 +83,31 @@ get_surf_and_patt(
     int h,
     xfce4::RGBA &bg
 ){
-    // statics are 0-filled @ compile time
-    static cairo_surface_t *surf;
-    static cairo_pattern_t *patt;
+    static cairo_surface_t *surf=0;
+    static cairo_pattern_t *patt=0;
     static int pre_w=-1;
     static int pre_h=-1;
     
     assert(surf_ptr);
     assert(patt_ptr);
 
-    // vediamo se qualcosa è cambiato
-    if(pre_w==w && pre_h==h && surf && patt){
-        // tutto come prima
-        *surf_ptr=surf;
-        *patt_ptr=patt;
-        return;
+    if(pre_w!=w || pre_h!=h || !surf || !patt){
+        // qualcosa è cambiato, rebuild
+
+        pre_w=w;
+        pre_h=h;
+
+        if(patt)cairo_pattern_destroy(patt);
+        if(surf)cairo_surface_destroy(surf);
+
+        surf=cairo_image_surface_create(CAIRO_FORMAT_RGB24,w,h);
+        cairo_t *cr = cairo_create(surf);
+        cairo_set_source_rgb(cr,bg.R,bg.G,bg.B);
+        cairo_paint(cr);
+        cairo_destroy(cr);
+        patt=cairo_pattern_create_for_surface(surf);
+        cairo_pattern_set_extend(patt,CAIRO_EXTEND_REPEAT);
     }
-
-    // qualcosa è cambiato, rebuild
-
-    pre_w=w;
-    pre_h=h;
-
-    if(patt)cairo_pattern_destroy(patt);
-    if(surf)cairo_surface_destroy(surf);
-
-    surf=cairo_image_surface_create(CAIRO_FORMAT_RGB24,w,h);
-    cairo_t *cr = cairo_create(surf);
-    cairo_set_source_rgb(cr,bg.R,bg.G,bg.B);
-    cairo_paint(cr);
-    cairo_destroy(cr);
-    patt=cairo_pattern_create_for_surface(surf);
-    cairo_pattern_set_extend(patt,CAIRO_EXTEND_REPEAT);
 
     *surf_ptr=surf;
     *patt_ptr=patt;
@@ -128,13 +120,9 @@ get_surf_and_patt(
 void
 draw_graph_heatmap (const Ptr<CPUHeatmap> &base, cairo_t *cr, gint w, gint h)
 {
-    // da quello che ho capito, questa release del plugin
-    // chiama una o più volte la draw_*, una volta per core (pseudocore in caso di avg)
-    // questa modalità però disegna sempre tutti i cores
-    // il resto del codice dovrebbe assicurarsi di chiamare questa
-    // solo per il core 0... ma se non lo fa, evitiamo di disegnare
-
     const int cores = base->history.data.size();
+
+    // core 0 = average, cpu load classico
 
     // bars:
     // past            now
@@ -143,11 +131,11 @@ draw_graph_heatmap (const Ptr<CPUHeatmap> &base, cairo_t *cr, gint w, gint h)
     // |core2------------|
     // : : :
 
-    static cairo_matrix_t mat;
-    static int x;
+    static int x=0;
+    static cairo_matrix_t mat={0};
     if(mat.xx==0){
-        // come trig-once usiamo il fatto che
-        // mat non è un'identità
+        // mat = |1 0 0|
+        //       |0 1 0|
         mat.xx=1;
         mat.yy=1;
     }
@@ -160,21 +148,51 @@ draw_graph_heatmap (const Ptr<CPUHeatmap> &base, cairo_t *cr, gint w, gint h)
     unsigned char *bgra_pixmap = cairo_image_surface_get_data(surf);
     cairo_surface_flush(surf);
 
-    for( int core=0; core<cores; core++ ) 
+    int bars=cores+1;   // la avg la facciamo alta il doppio
+    int bar=0;
+
+    for( int core=0; core<1; core++, bar++ ) 
     {
         // leggiamo solo l'ultimo valore del core
         const CpuLoad *data = base->history.data[core];
         const gssize mask = base->history.mask();
         const int off = base->history.offset;
 
-        xfce4::RGBA c = lerp_rgb(base->colors, NUM_COLORS, data[off&mask].value);
+        xfce4::RGBA c = lerp_RGBA_table(base->colors, NUM_COLORS, data[off&mask].value);
         const int b = 255*c.B;
         const int g = 255*c.G;
         const int r = 255*c.R;
 
         // disegnamo un segmento verticale
-        int y0=h*(core+0)/cores;
-        int y1=h*(core+1)/cores;
+        int y0=h*(bar+0)/bars;
+        int y1=h*(bar+1)/bars;
+        
+        unsigned char *bgr = &bgra_pixmap[y0*stride+x*4];
+
+        for( int y=y0; y<y1; y++, bgr+=stride ){
+            bgr[0]=b;
+            bgr[1]=g;
+            bgr[2]=r;
+        }
+    }
+
+    bar++;  // saltiamo una barra
+
+    for( int core=1; core<cores; core++, bar++ ) 
+    {
+        // leggiamo solo l'ultimo valore del core
+        const CpuLoad *data = base->history.data[core];
+        const gssize mask = base->history.mask();
+        const int off = base->history.offset;
+
+        xfce4::RGBA c = lerp_RGBA_table(base->colors, NUM_COLORS, data[off&mask].value);
+        const int b = 255*c.B;
+        const int g = 255*c.G;
+        const int r = 255*c.R;
+
+        // disegnamo un segmento verticale
+        int y0=h*(bar+0)/bars;
+        int y1=h*(bar+1)/bars;
         
         unsigned char *bgr = &bgra_pixmap[y0*stride+x*4];
 

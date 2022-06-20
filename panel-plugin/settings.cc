@@ -50,7 +50,8 @@ static const gchar *const color_keys[NUM_COLORS] =
 void
 read_settings (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
 {
-    CPUHeatmapUpdateRate rate = RATE_300MS;
+    // defaults
+    CPUHeatmapUpdateRate rate = RATE_200MS;
     CPUHeatmapMode mode = MODE_HEATMAP;
     bool border = true;
     bool frame = false;
@@ -113,13 +114,13 @@ read_settings (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
         switch (rate)
         {
             case RATE_100MS:
-            case RATE_300MS:
+            case RATE_200MS:
             case RATE_500MS:
             case RATE_1S:
-            case RATE_3S:
+            case RATE_2S:
                 break;
             default:
-                rate = RATE_100MS;
+                rate = RATE_200MS;
         }
 
         if (G_UNLIKELY (size <= 0))

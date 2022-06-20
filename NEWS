@@ -1,10 +1,27 @@
 
+
 2022-06-16 22:28:17
 problemi:
-listbox modalità non mostra la modalità
+listbox modalità non mostra nulla
 al primo avvio
     l'intervallo di aggiornamento non è settato
     colori di merda
     sfondo transp
     nessun comando associato
+
+
+
+
+2022-06-20 14:54:10
+listbox modalità non mostra nulla - fixed
+l'intervallo di aggiornamento non è settato - fixed
+colori di merda - fixed
+sfondo transp - fixed
+nessun comando associato - fixed
+
+desiderata:
+scelta direzione scrolling ←↓→↑
+show/hide average bar
+
+rimuovere da disabled da listbox modalità... non serve ad una cippa
 
