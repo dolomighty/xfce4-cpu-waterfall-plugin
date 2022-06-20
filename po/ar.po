@@ -19,15 +19,15 @@ msgstr ""
 "Language: ar\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: ../panel-plugin/cpu.cc:167 ../panel-plugin/cpuheatmap.desktop.in.h:2
+#: ../panel-plugin/heatmap.cc:167 ../panel-plugin/cpuheatmap.desktop.in.h:2
 msgid "Graphical representation of the CPU load"
 msgstr "تمثيل رسومي لحمل وحدة المعالجة المركزية"
 
-#: ../panel-plugin/cpu.cc:169
+#: ../panel-plugin/heatmap.cc:169
 msgid "Copyright (c) 2003-2021\n"
 msgstr ""
 
-#: ../panel-plugin/cpu.cc:642
+#: ../panel-plugin/heatmap.cc:642
 #, c-format
 msgid "Usage: %u%%"
 msgstr "الإستخدام: %u%%"

@@ -1,5 +1,7 @@
 @SET_MAKE@
 
+ACLOCAL_AMFLAGS=-I m4
+
 # Note: The order of directories in this list isn't arbitrary
 SUBDIRS = \
 	xfce4++ \

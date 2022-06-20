@@ -24,7 +24,7 @@
 #ifndef _XFCE_CPUHEATMAP_MODE_H_
 #define _XFCE_CPUHEATMAP_MODE_H_
 
-#include "cpu.h"
+#include "heatmap.h"
 
 void draw_graph_heatmap    (const Ptr<CPUHeatmap> &base, cairo_t *cr, gint w, gint h);
 

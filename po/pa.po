@@ -18,15 +18,15 @@ msgstr ""
 "Language: pa\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../panel-plugin/cpu.cc:160 ../panel-plugin/cpuheatmap.desktop.in.h:2
+#: ../panel-plugin/heatmap.cc:160 ../panel-plugin/cpuheatmap.desktop.in.h:2
 msgid "Graphical representation of the CPU load"
 msgstr "CPU ਲੋਡ ਲਈ ਗਰਾਫਿਕਲ ਦਿੱਖ"
 
-#: ../panel-plugin/cpu.cc:162
+#: ../panel-plugin/heatmap.cc:162
 msgid "Copyright (c) 2003-2019\n"
 msgstr ""
 
-#: ../panel-plugin/cpu.cc:407
+#: ../panel-plugin/heatmap.cc:407
 #, c-format
 msgid "Usage: %u%%"
 msgstr ""

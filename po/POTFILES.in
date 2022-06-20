@@ -1,4 +1,4 @@
-panel-plugin/cpu.cc
+panel-plugin/heatmap.cc
 panel-plugin/mode.cc
 panel-plugin/os.cc
 panel-plugin/properties.cc

@@ -24,7 +24,7 @@
 #ifndef _XFCE_CPUHEATMAP_PROPERTIES_H_
 #define _XFCE_CPUHEATMAP_PROPERTIES_H_
 
-#include "cpu.h"
+#include "heatmap.h"
 
 void create_options (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base);
 

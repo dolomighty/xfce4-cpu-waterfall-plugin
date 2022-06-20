@@ -1,4 +1,4 @@
-/*  cpu.cc
+/*  heatmap.cc
  *  Part of xfce4-cpuheatmap-plugin
  *
  *  Copyright (c) Alexander Nordfelth <alex.nordfelth@telia.com>
@@ -25,7 +25,7 @@
 
 /* The fixes file has to be included before any other #include directives */
 #include "xfce4++/util/fixes.h"
-#include "cpu.h"
+#include "heatmap.h"
 #include "settings.h"
 #include "mode.h"
 #include "plugin.h"

@@ -24,7 +24,7 @@
 #ifndef _XFCE_CPUHEATMAP_SETTINGS_H_
 #define _XFCE_CPUHEATMAP_SETTINGS_H_
 
-#include "cpu.h"
+#include "heatmap.h"
 
 void read_settings (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base);
 void write_settings (XfcePanelPlugin *plugin, const Ptr<const CPUHeatmap> &base);

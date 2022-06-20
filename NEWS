@@ -23,5 +23,10 @@ desiderata:
 scelta direzione scrolling ←↓→↑
 show/hide average bar
 
-rimuovere da disabled da listbox modalità... non serve ad una cippa
+rimuovere disabled dalla listbox modalità... non serve ad una cippa
+potrebbe esser riusata per la scroll dir
+
+
+2022-06-20 19:03:40
+ok show/hide average bar
 

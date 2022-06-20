@@ -18,15 +18,15 @@ msgstr ""
 "Language: ast\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../panel-plugin/cpu.cc:153 ../panel-plugin/cpuheatmap.desktop.in.h:2
+#: ../panel-plugin/heatmap.cc:153 ../panel-plugin/cpuheatmap.desktop.in.h:2
 msgid "Graphical representation of the CPU load"
 msgstr "Representación gráfica de la carga de CPU"
 
-#: ../panel-plugin/cpu.cc:155
+#: ../panel-plugin/heatmap.cc:155
 msgid "Copyright (c) 2003-2012\n"
 msgstr "Copyright (c) 2003-2012\n"
 
-#: ../panel-plugin/cpu.cc:368
+#: ../panel-plugin/heatmap.cc:368
 #, c-format
 msgid "Usage: %u%%"
 msgstr "Usu: %u%%"

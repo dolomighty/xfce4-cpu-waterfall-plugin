@@ -19,8 +19,8 @@ libcpuheatmap_la_LIBADD = \
 libcpuheatmap_la_SOURCES = \
 	mode.cc \
 	mode.h \
-	cpu.cc \
-	cpu.h \
+	heatmap.cc \
+	heatmap.h \
 	os.cc \
 	os.h \
 	plugin.h \

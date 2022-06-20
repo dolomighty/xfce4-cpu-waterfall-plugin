@@ -1,4 +1,4 @@
-/*  cpu.h
+/*  heatmap.h
  *  Part of xfce4-cpuheatmap-plugin
  *
  *  Copyright (c) Alexander Nordfelth <alex.nordfelth@telia.com>
