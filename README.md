@@ -29,3 +29,47 @@ rimuovere disabled dalla listbox modalità... non serve ad una cippa
 potrebbe esser riusata per la scroll dir
 
 
+
+
+
+
+
+
+
+RELEASE:
+
+sudo make uninstall
+
+./autogen.sh --libdir=/usr/lib/x86_64-linux-gnu --datadir=/usr/share --disable-debug
+
+make && sudo make install
+
+sudo gtk-update-icon-cache -f -t /usr/share/icons/hicolor/
+
+unset PANEL_DEBUG ; xfce4-panel -r
+
+
+
+
+
+
+
+DEBUG:
+
+sudo make uninstall
+
+./autogen.sh --libdir=/usr/lib/x86_64-linux-gnu --datadir=/usr/share --enable-debug
+
+make && sudo make install
+
+xfce4-panel -q ; PANEL_DEBUG=1 xfce4-panel
+
+
+
+
+
+make maintainer-clean
+
+
+
+
