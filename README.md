@@ -1,5 +1,6 @@
 # xfce4-cpuheatmap-plugin
 
+```
 CPU Heatmap plugin for the Xfce4 panel.
 This plugin displays a heatmap of all the CPU cores.
 
