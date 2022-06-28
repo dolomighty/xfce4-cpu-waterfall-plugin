@@ -1,5 +1,5 @@
 /*  
- *  Part of xfce4-cpuheatmap-plugin
+ *  Part of xfce4-cpuwaterfall-plugin
  *
  *  Copyright (c) Andrea Villa <dolomighty74@gmail.com>
  *
@@ -23,7 +23,7 @@
 #include <cairo/cairo.h>
 #include <math.h>
 #include <stdlib.h>
-#include "draw_graph_heatmap.h"
+#include "draw_waterfall.h"
 
 // amo assert e la voglio pure in release
 #undef NDEBUG
@@ -111,7 +111,7 @@ get_surf_and_patt(
 
 
 void
-vline( const Ptr<CPUHeatmap> &base, int y0, int y1, 
+vline( const Ptr<CPUWaterfall> &base, int y0, int y1, 
     unsigned char *bgra, int stride, xfce4::RGBA c, float border )
 {
     const int br = c.R*255;
@@ -149,7 +149,7 @@ vline( const Ptr<CPUHeatmap> &base, int y0, int y1,
 
 
 void
-draw_graph_heatmap (const Ptr<CPUHeatmap> &base, cairo_t *cr, gint w, gint h)
+draw_waterfall (const Ptr<CPUWaterfall> &base, cairo_t *cr, gint w, gint h)
 {
     const int cores = base->history.data.size();
 

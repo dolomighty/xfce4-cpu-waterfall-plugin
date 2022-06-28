@@ -6,15 +6,15 @@ dnl
 
 dnl Version information
 AC_CONFIG_MACRO_DIRS([m4])
-m4_define([cpuheatmap_version_major], [1])
-m4_define([cpuheatmap_version_minor], [2])
-m4_define([cpuheatmap_version_micro], [6])
-m4_define([cpuheatmap_version_build], [@REVISION@])
-m4_define([cpuheatmap_version_tag], [git])
-m4_define([cpuheatmap_version], [cpuheatmap_version_major().cpuheatmap_version_minor().cpuheatmap_version_micro()ifelse(cpuheatmap_version_tag(), [git], [cpuheatmap_version_tag()-cpuheatmap_version_build()], [cpuheatmap_version_tag()])])
+m4_define([cpuwaterfall_version_major], [1])
+m4_define([cpuwaterfall_version_minor], [2])
+m4_define([cpuwaterfall_version_micro], [6])
+m4_define([cpuwaterfall_version_build], [@REVISION@])
+m4_define([cpuwaterfall_version_tag], [git])
+m4_define([cpuwaterfall_version], [cpuwaterfall_version_major().cpuwaterfall_version_minor().cpuwaterfall_version_micro()ifelse(cpuwaterfall_version_tag(), [git], [cpuwaterfall_version_tag()-cpuwaterfall_version_build()], [cpuwaterfall_version_tag()])])
 
 dnl Initialize autoconf
-AC_INIT([xfce4-cpuheatmap-plugin],[cpuheatmap_version],[https://gitlab.xfce.org/panel-plugins/xfce4-cpuheatmap-plugin/],[xfce4-cpuheatmap-plugin])
+AC_INIT([xfce4-cpuwaterfall-plugin],[cpuwaterfall_version],[https://gitlab.xfce.org/panel-plugins/xfce4-cpuwaterfall-plugin/],[xfce4-cpuwaterfall-plugin])
 AC_PREREQ([2.60])
 
 dnl Initialize automake

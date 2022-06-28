@@ -1,5 +1,5 @@
 /*  plugin.h
- *  Part of xfce4-cpuheatmap-plugin
+ *  Part of xfce4-cpuwaterfall-plugin
  *
  *  Copyright (c) 2021 Jan Ziak <0xe2.0x9a.0x9b@xfce.org>
  *
@@ -18,15 +18,15 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef _XFCE_CPUHEATMAP_PLUGIN_H_
-#define _XFCE_CPUHEATMAP_PLUGIN_H_
+#ifndef _XFCE_CPUWATERFALL_PLUGIN_H_
+#define _XFCE_CPUWATERFALL_PLUGIN_H_
 
 #include <libxfce4panel/libxfce4panel.h>
 
 G_BEGIN_DECLS
 
-void cpuheatmap_construct (XfcePanelPlugin *plugin);
+void cpuwaterfall_construct (XfcePanelPlugin *plugin);
 
 G_END_DECLS
 
-#endif /* _XFCE_CPUHEATMAP_PLUGIN_H_ */
+#endif /* _XFCE_CPUWATERFALL_PLUGIN_H_ */

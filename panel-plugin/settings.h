@@ -1,5 +1,5 @@
 /*  settings.h
- *  Part of xfce4-cpuheatmap-plugin
+ *  Part of xfce4-cpuwaterfall-plugin
  *
  *  Copyright (c) Alexander Nordfelth <alex.nordfelth@telia.com>
  *  Copyright (c) gatopeich <gatoguan-os@yahoo.com>
@@ -21,12 +21,12 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-#ifndef _XFCE_CPUHEATMAP_SETTINGS_H_
-#define _XFCE_CPUHEATMAP_SETTINGS_H_
+#ifndef _XFCE_CPUWATERFALL_SETTINGS_H_
+#define _XFCE_CPUWATERFALL_SETTINGS_H_
 
-#include "heatmap.h"
+#include "waterfall.h"
 
-void read_settings (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base);
-void write_settings (XfcePanelPlugin *plugin, const Ptr<const CPUHeatmap> &base);
+void read_settings (XfcePanelPlugin *plugin, const Ptr<CPUWaterfall> &base);
+void write_settings (XfcePanelPlugin *plugin, const Ptr<const CPUWaterfall> &base);
 
-#endif /* _XFCE_CPUHEATMAP_SETTINGS_H_ */
+#endif /* _XFCE_CPUWATERFALL_SETTINGS_H_ */

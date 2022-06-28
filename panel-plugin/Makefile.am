@@ -1,26 +1,26 @@
 plugindir = $(libdir)/xfce4/panel/plugins
-plugin_LTLIBRARIES = libcpuheatmap.la
+plugin_LTLIBRARIES = libcpuwaterfall.la
 
 AM_CPPFLAGS = -I${top_srcdir}
 
-libcpuheatmap_la_CFLAGS = \
+libcpuwaterfall_la_CFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\" \
 	@LIBXFCE4UI_CFLAGS@ \
 	@LIBXFCE4PANEL_CFLAGS@
 
-libcpuheatmap_la_CXXFLAGS = $(libcpuheatmap_la_CFLAGS)
+libcpuwaterfall_la_CXXFLAGS = $(libcpuwaterfall_la_CFLAGS)
 
-libcpuheatmap_la_LIBADD = \
+libcpuwaterfall_la_LIBADD = \
 	$(top_builddir)/xfce4++/util/libxfce4util_pp.la \
 	@LIBXFCE4UI_LIBS@ \
 	@LIBXFCE4PANEL_LIBS@ \
 	-lm
 
-libcpuheatmap_la_SOURCES = \
-	draw_graph_heatmap.cc \
-	draw_graph_heatmap.h \
-	heatmap.cc \
-	heatmap.h \
+libcpuwaterfall_la_SOURCES = \
+	draw_waterfall.cc \
+	draw_waterfall.h \
+	waterfall.cc \
+	waterfall.h \
 	os.cc \
 	os.h \
 	plugin.h \
@@ -30,7 +30,7 @@ libcpuheatmap_la_SOURCES = \
 	settings.cc \
 	settings.h
 
-libcpuheatmap_la_LDFLAGS = \
+libcpuwaterfall_la_LDFLAGS = \
 	-avoid-version \
 	-module \
 	-no-undefined \
@@ -40,7 +40,7 @@ libcpuheatmap_la_LDFLAGS = \
 #
 # .desktop file
 #
-desktop_in_files = cpuheatmap.desktop.in
+desktop_in_files = cpuwaterfall.desktop.in
 
 desktopdir = $(datadir)/xfce4/panel/plugins
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)

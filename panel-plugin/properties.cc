@@ -1,5 +1,5 @@
 /*  properties.cc
- *  Part of xfce4-cpuheatmap-plugin
+ *  Part of xfce4-cpuwaterfall-plugin
  *
  *  Copyright (c) Alexander Nordfelth <alex.nordfelth@telia.com>
  *  Copyright (c) gatopeich <gatoguan-os@yahoo.com>
@@ -26,7 +26,7 @@
 /* The fixes file has to be included before any other #include directives */
 #include "xfce4++/util/fixes.h"
 
-#include "heatmap.h"
+#include "waterfall.h"
 #include "properties.h"
 #include "settings.h"
 
@@ -35,18 +35,18 @@
 #include <vector>
 #include "xfce4++/util.h"
 
-struct CPUHeatmapOptions
+struct CPUWaterfallOptions
 {
-    const Ptr<CPUHeatmap> base;
+    const Ptr<CPUWaterfall> base;
 
     GtkColorButton  *color_buttons[NUM_COLORS] = {};
     GtkBox          *hbox_in_terminal = NULL;
     GtkBox          *hbox_startup_notification = NULL;
     guint           timeout_id = 0;
 
-    CPUHeatmapOptions(const Ptr<CPUHeatmap> &_base) : base(_base) {}
+    CPUWaterfallOptions(const Ptr<CPUWaterfall> &_base) : base(_base) {}
 
-    ~CPUHeatmapOptions() {
+    ~CPUWaterfallOptions() {
         g_info ("%s", __PRETTY_FUNCTION__);
         removeTimer();
     }
@@ -69,25 +69,25 @@ static GtkBox*    create_check_box (GtkBox *tab, GtkSizeGroup *sg, const gchar *
 static GtkWidget* create_drop_down (GtkBox *tab, GtkSizeGroup *sg, const gchar *name,
                                     const std::vector<std::string> &items, size_t init,
                                     const std::function<void(GtkComboBox*)> &callback);
-static void       setup_update_interval_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> &data);
-static void       setup_size_option (GtkBox *vbox, GtkSizeGroup *sg, XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base);
-static void       setup_command_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> &data);
-static void       setup_color_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> &data,
-                                      CPUHeatmapColorNumber number, const gchar *name, const gchar *tooltip,
+static void       setup_update_interval_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUWaterfallOptions> &data);
+static void       setup_size_option (GtkBox *vbox, GtkSizeGroup *sg, XfcePanelPlugin *plugin, const Ptr<CPUWaterfall> &base);
+static void       setup_command_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUWaterfallOptions> &data);
+static void       setup_color_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUWaterfallOptions> &data,
+                                      CPUWaterfallColorNumber number, const gchar *name, const gchar *tooltip,
                                       const std::function<void(GtkColorButton*)> &callback);
-static void       setup_mode_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> &data);
-static void       change_color (GtkColorButton  *button, const Ptr<CPUHeatmap> &base, CPUHeatmapColorNumber number);
-static void       update_sensitivity (const Ptr<CPUHeatmapOptions> &data, bool initial = false);
+static void       setup_mode_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUWaterfallOptions> &data);
+static void       change_color (GtkColorButton  *button, const Ptr<CPUWaterfall> &base, CPUWaterfallColorNumber number);
+static void       update_sensitivity (const Ptr<CPUWaterfallOptions> &data, bool initial = false);
 
 
 
 void
-create_options (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
+create_options (XfcePanelPlugin *plugin, const Ptr<CPUWaterfall> &base)
 {
     xfce_panel_plugin_block_menu (plugin);
 
     GtkWidget *dlg = xfce_titled_dialog_new_with_mixed_buttons (
-        _("CPU Heatmap Properties"),
+        _("CPU Waterfall Properties"),
         GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (plugin))),
         GTK_DIALOG_DESTROY_WITH_PARENT,
         "window-close-symbolic",
@@ -96,7 +96,7 @@ create_options (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
         NULL
     );
 
-    auto dlg_data = xfce4::make<CPUHeatmapOptions>(base);
+    auto dlg_data = xfce4::make<CPUWaterfallOptions>(base);
 
     xfce4::connect_destroy (dlg, [dlg_data](GtkWidget*) {
         dlg_data->removeTimer();
@@ -107,7 +107,7 @@ create_options (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
         write_settings (base->plugin, base);
     });
 
-    gtk_window_set_icon_name (GTK_WINDOW (dlg), "org.xfce.panel.cpuheatmap");
+    gtk_window_set_icon_name (GTK_WINDOW (dlg), "org.xfce.panel.cpuwaterfall");
 
     GtkSizeGroup *sg = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -120,13 +120,13 @@ create_options (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
     dlg_data->hbox_in_terminal = create_check_box (vbox, sg, _("Run in terminal"),
         base->command_in_terminal, NULL,
         [dlg_data](GtkToggleButton *button) {
-            CPUHeatmap::set_in_terminal (dlg_data->base, gtk_toggle_button_get_active (button));
+            CPUWaterfall::set_in_terminal (dlg_data->base, gtk_toggle_button_get_active (button));
             update_sensitivity (dlg_data);
         });
     dlg_data->hbox_startup_notification = create_check_box (vbox, sg, _("Use startup notification"),
         base->command_startup_notification, NULL,
         [dlg_data](GtkToggleButton *button) {
-            CPUHeatmap::set_startup_notification (dlg_data->base, gtk_toggle_button_get_active (button));
+            CPUWaterfall::set_startup_notification (dlg_data->base, gtk_toggle_button_get_active (button));
             update_sensitivity (dlg_data);
         });
 
@@ -150,18 +150,18 @@ create_options (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
 
     create_check_box (vbox2, sg, _("Show frame"), base->has_frame, NULL,
         [dlg_data](GtkToggleButton *button) {
-            CPUHeatmap::set_frame (dlg_data->base, gtk_toggle_button_get_active (button));
+            CPUWaterfall::set_frame (dlg_data->base, gtk_toggle_button_get_active (button));
 //            update_sensitivity (dlg_data);
         });
     create_check_box (vbox2, sg, _("Show border"), base->has_border, NULL,
         [dlg_data](GtkToggleButton *button) {
-            CPUHeatmap::set_border (dlg_data->base, gtk_toggle_button_get_active (button));
+            CPUWaterfall::set_border (dlg_data->base, gtk_toggle_button_get_active (button));
 //            update_sensitivity (dlg_data);
         });
 
     create_check_box (vbox2, sg, _("Show average"), base->has_average, NULL,
         [dlg_data](GtkToggleButton *button) {
-            CPUHeatmap::set_average (dlg_data->base, gtk_toggle_button_get_active (button));
+            CPUWaterfall::set_average (dlg_data->base, gtk_toggle_button_get_active (button));
 //            update_sensitivity (dlg_data);
         });
 
@@ -269,7 +269,7 @@ create_drop_down (GtkBox *tab, GtkSizeGroup *sg, const gchar *name,
 
 
 static void
-setup_update_interval_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> &data)
+setup_update_interval_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUWaterfallOptions> &data)
 {
     const std::vector<std::string> items = {
         _("~100ms"),
@@ -281,13 +281,13 @@ setup_update_interval_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatm
 
     create_drop_down (vbox, sg, _("Update Interval:"), items, data->base->update_interval,
         [data](GtkComboBox *combo) {
-            CPUHeatmap::set_update_rate (data->base, (CPUHeatmapUpdateRate) gtk_combo_box_get_active (combo));
+            CPUWaterfall::set_update_rate (data->base, (CPUWaterfallUpdateRate) gtk_combo_box_get_active (combo));
         });
 }
 
 
 static void
-setup_size_option (GtkBox *vbox, GtkSizeGroup *sg, XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
+setup_size_option (GtkBox *vbox, GtkSizeGroup *sg, XfcePanelPlugin *plugin, const Ptr<CPUWaterfall> &base)
 {
     GtkBox *hbox;
     if (xfce_panel_plugin_get_orientation (plugin) == GTK_ORIENTATION_HORIZONTAL)
@@ -299,7 +299,7 @@ setup_size_option (GtkBox *vbox, GtkSizeGroup *sg, XfcePanelPlugin *plugin, cons
     gtk_spin_button_set_value (GTK_SPIN_BUTTON (size), base->size);
     gtk_box_pack_start (GTK_BOX (hbox), size, FALSE, FALSE, 0);
     xfce4::connect (GTK_SPIN_BUTTON (size), "value-changed", [base](GtkSpinButton *button) {
-        CPUHeatmap::set_size (base, gtk_spin_button_get_value_as_int (button));
+        CPUWaterfall::set_size (base, gtk_spin_button_get_value_as_int (button));
     });
 }
 
@@ -308,7 +308,7 @@ setup_size_option (GtkBox *vbox, GtkSizeGroup *sg, XfcePanelPlugin *plugin, cons
 
 
 static void
-setup_command_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> &data)
+setup_command_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUWaterfallOptions> &data)
 {
     GtkBox *hbox = create_option_line (vbox, sg, _("Associated command:"), NULL);
 
@@ -325,7 +325,7 @@ setup_command_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOption
                                      tooltip.c_str());
     gtk_box_pack_start (GTK_BOX (hbox), associatecommand, FALSE, FALSE, 0);
     xfce4::connect (GTK_ENTRY (associatecommand), "changed", [data](GtkEntry *entry) {
-        CPUHeatmap::set_command (data->base, gtk_entry_get_text (entry));
+        CPUWaterfall::set_command (data->base, gtk_entry_get_text (entry));
         update_sensitivity (data);
     });
 }
@@ -334,8 +334,8 @@ setup_command_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOption
 
 
 static void
-setup_color_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> &data,
-                    CPUHeatmapColorNumber number, const gchar *name, const gchar *tooltip,
+setup_color_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUWaterfallOptions> &data,
+                    CPUWaterfallColorNumber number, const gchar *name, const gchar *tooltip,
                     const std::function<void(GtkColorButton*)> &callback)
 {
     GtkBox *hbox = create_option_line (vbox, sg, name, tooltip);
@@ -348,19 +348,19 @@ setup_color_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions>
 
 
 static void
-setup_mode_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> &data)
+setup_mode_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUWaterfallOptions> &data)
 {
 
     const std::vector<std::string> items = {
         _("Disabled"),
-        _("Heatmap"),
+        _("Waterfall"),
     };
 
     gint selected = 0;
     switch (data->base->mode)
     {
         case MODE_DISABLED: selected = 0; break;
-        case MODE_HEATMAP:  selected = 1; break;
+        case MODE_WATERFALL:  selected = 1; break;
     }
 
     create_drop_down (vbox, sg, _("Mode:"), items, selected,
@@ -368,19 +368,19 @@ setup_mode_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> 
             /* 'Disabled' mode was introduced in 1.1.0 as '-1'
              * for this reason we need to decrement the selected value */
             gint active = gtk_combo_box_get_active (combo);
-            CPUHeatmapMode mode;
+            CPUWaterfallMode mode;
 
             switch (active)
             {
                 case MODE_DISABLED:
-                case MODE_HEATMAP:
-                    mode = (CPUHeatmapMode) active;
+                case MODE_WATERFALL:
+                    mode = (CPUWaterfallMode) active;
                     break;
                 default:
-                    mode = MODE_HEATMAP;
+                    mode = MODE_WATERFALL;
             }
 
-            CPUHeatmap::set_mode (data->base, mode);
+            CPUWaterfall::set_mode (data->base, mode);
 
             update_sensitivity (data);
         });
@@ -389,16 +389,16 @@ setup_mode_option (GtkBox *vbox, GtkSizeGroup *sg, const Ptr<CPUHeatmapOptions> 
 
 
 static void
-change_color (GtkColorButton *button, const Ptr<CPUHeatmap> &base, CPUHeatmapColorNumber number)
+change_color (GtkColorButton *button, const Ptr<CPUWaterfall> &base, CPUWaterfallColorNumber number)
 {
-    CPUHeatmap::set_color (base, number, xfce4::gtk_get_rgba (button));
+    CPUWaterfall::set_color (base, number, xfce4::gtk_get_rgba (button));
 }
 
 
 static void
-update_sensitivity (const Ptr<CPUHeatmapOptions> &data, bool initial)
+update_sensitivity (const Ptr<CPUWaterfallOptions> &data, bool initial)
 {
-    const Ptr<CPUHeatmap> base = data->base;
+    const Ptr<CPUWaterfall> base = data->base;
     const bool default_command = base->command.empty();
 
     gtk_widget_set_sensitive (GTK_WIDGET (data->hbox_in_terminal), !default_command);

@@ -19,15 +19,15 @@ msgstr ""
 "Language: th\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../panel-plugin/heatmap.cc:167 ../panel-plugin/cpuheatmap.desktop.in.h:2
+#: ../panel-plugin/waterfall.cc:167 ../panel-plugin/cpuwaterfall.desktop.in.h:2
 msgid "Graphical representation of the CPU load"
 msgstr "แสดงโหลดของซีพียูในแบบกราฟิกส์"
 
-#: ../panel-plugin/heatmap.cc:169
+#: ../panel-plugin/waterfall.cc:169
 msgid "Copyright (c) 2003-2021\n"
 msgstr "Copyright (c) 2003-2021\n"
 
-#: ../panel-plugin/heatmap.cc:642
+#: ../panel-plugin/waterfall.cc:642
 #, c-format
 msgid "Usage: %u%%"
 msgstr "ใช้งาน: %u%%"
@@ -44,7 +44,7 @@ msgid ""
 msgstr "'เฉพาะจุด' แสดงผลกระทบด้านสมรรถนะชั่วคราวที่มีผลต่อเธรดที่เกี่ยวข้องเท่านั้น จากการเลือกจัดเวลาที่ด้อยประสิทธิภาพของ SMT"
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Heatmap Properties"
+msgid "CPU Waterfall Properties"
 msgstr "คุณสมบัติของกราฟซีพียู"
 
 #: ../panel-plugin/properties.cc:108
@@ -261,6 +261,6 @@ msgstr "เฉพาะจุด: %.3g%%"
 msgid "SMT detected: N/A"
 msgstr "ตรวจพบ SMT: ไม่ทราบ"
 
-#: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Heatmap"
+#: ../panel-plugin/cpuwaterfall.desktop.in.h:1
+msgid "CPU Waterfall"
 msgstr "กราฟซีพียู"

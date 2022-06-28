@@ -1,5 +1,5 @@
 /*  plugin.c
- *  Part of xfce4-cpuheatmap-plugin
+ *  Part of xfce4-cpuwaterfall-plugin
  *
  *  Copyright (c) 2021 Jan Ziak <0xe2.0x9a.0x9b@xfce.org>
  *
@@ -20,4 +20,4 @@
 
 #include "plugin.h"
 
-XFCE_PANEL_PLUGIN_REGISTER (cpuheatmap_construct);
+XFCE_PANEL_PLUGIN_REGISTER (cpuwaterfall_construct);

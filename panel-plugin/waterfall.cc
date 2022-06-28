@@ -1,5 +1,5 @@
-/*  heatmap.cc
- *  Part of xfce4-cpuheatmap-plugin
+/*  waterfall.cc
+ *  Part of xfce4-cpuwaterfall-plugin
  *
  *  Copyright (c) Alexander Nordfelth <alex.nordfelth@telia.com>
  *  Copyright (c) gatopeich <gatoguan-os@yahoo.com>
@@ -25,9 +25,9 @@
 
 /* The fixes file has to be included before any other #include directives */
 #include "xfce4++/util/fixes.h"
-#include "heatmap.h"
+#include "waterfall.h"
 #include "settings.h"
-#include "draw_graph_heatmap.h"
+#include "draw_waterfall.h"
 #include "plugin.h"
 #include "properties.h"
 #include <libxfce4ui/libxfce4ui.h>
@@ -44,23 +44,23 @@ using xfce4::TooltipTime;
 
 /* vim: !sort -k3 */
 static void          about_cb       ();
-static Propagation   command_cb     (GdkEventButton *event, const Ptr<CPUHeatmap> &base);
-static Ptr<CPUHeatmap> create_gui   (XfcePanelPlugin *plugin);
-static Propagation   draw_area_cb   (cairo_t *cr, const Ptr<CPUHeatmap> &base);
-static void          mode_cb        (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base);
-static void          shutdown       (const Ptr<CPUHeatmap> &base);
-static PluginSize    size_cb        (XfcePanelPlugin *plugin, guint size, const Ptr<CPUHeatmap> &base);
-static TooltipTime   tooltip_cb     (GtkTooltip *tooltip, const Ptr<CPUHeatmap> &base);
-static void          update_tooltip (const Ptr<CPUHeatmap> &base);
+static Propagation   command_cb     (GdkEventButton *event, const Ptr<CPUWaterfall> &base);
+static Ptr<CPUWaterfall> create_gui   (XfcePanelPlugin *plugin);
+static Propagation   draw_area_cb   (cairo_t *cr, const Ptr<CPUWaterfall> &base);
+static void          mode_cb        (XfcePanelPlugin *plugin, const Ptr<CPUWaterfall> &base);
+static void          shutdown       (const Ptr<CPUWaterfall> &base);
+static PluginSize    size_cb        (XfcePanelPlugin *plugin, guint size, const Ptr<CPUWaterfall> &base);
+static TooltipTime   tooltip_cb     (GtkTooltip *tooltip, const Ptr<CPUWaterfall> &base);
+static void          update_tooltip (const Ptr<CPUWaterfall> &base);
 
 
 
 void
-cpuheatmap_construct (XfcePanelPlugin *plugin)
+cpuwaterfall_construct (XfcePanelPlugin *plugin)
 {
     xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
-    Ptr<CPUHeatmap> base = create_gui (plugin);
+    Ptr<CPUWaterfall> base = create_gui (plugin);
 
     read_settings (plugin, base);
 
@@ -88,12 +88,12 @@ init_cpu_data (std::vector<CpuData> &data)
 
 
 
-static Ptr<CPUHeatmap>
+static Ptr<CPUWaterfall>
 create_gui (XfcePanelPlugin *plugin)
 {
     GtkWidget *frame, *ebox;
     GtkOrientation orientation;
-    auto base = xfce4::make<CPUHeatmap>();
+    auto base = xfce4::make<CPUWaterfall>();
 
     orientation = xfce_panel_plugin_get_orientation (plugin);
     if ((base->nr_cores = init_cpu_data (base->cpu_data)) == 0)
@@ -160,7 +160,7 @@ about_cb ()
     };
 
     gtk_show_about_dialog (NULL,
-        "logo-icon-name", "org.xfce.panel.cpuheatmap",
+        "logo-icon-name", "org.xfce.panel.cpuwaterfall",
         "license", xfce_get_license_text (XFCE_LICENSE_TEXT_GPL),
         "version", PACKAGE_VERSION,
         "program-name", PACKAGE_NAME,
@@ -173,7 +173,7 @@ about_cb ()
 
 
 static void
-ebox_revalidate (const Ptr<CPUHeatmap> &base)
+ebox_revalidate (const Ptr<CPUWaterfall> &base)
 {
     gtk_event_box_set_above_child (GTK_EVENT_BOX (base->ebox), FALSE);
     gtk_event_box_set_above_child (GTK_EVENT_BOX (base->ebox), TRUE);
@@ -181,7 +181,7 @@ ebox_revalidate (const Ptr<CPUHeatmap> &base)
 
 
 
-CPUHeatmap::~CPUHeatmap()
+CPUWaterfall::~CPUWaterfall()
 {
     g_info ("%s", __PRETTY_FUNCTION__);
     for (auto hist_data : history.data)
@@ -191,7 +191,7 @@ CPUHeatmap::~CPUHeatmap()
 
 
 static void
-shutdown (const Ptr<CPUHeatmap> &base)
+shutdown (const Ptr<CPUWaterfall> &base)
 {
     gtk_widget_destroy (base->ebox);
     base->ebox = NULL;
@@ -207,7 +207,7 @@ shutdown (const Ptr<CPUHeatmap> &base)
 
 
 static void
-queue_draw (const Ptr<CPUHeatmap> &base)
+queue_draw (const Ptr<CPUWaterfall> &base)
 {
     if (base->mode != MODE_DISABLED)
         gtk_widget_queue_draw (base->draw_area);
@@ -216,7 +216,7 @@ queue_draw (const Ptr<CPUHeatmap> &base)
 
 
 static void
-resize_history (const Ptr<CPUHeatmap> &base, gssize history_size)
+resize_history (const Ptr<CPUWaterfall> &base, gssize history_size)
 {
     const guint fastest = get_update_interval_ms (RATE_100MS);
     const guint slowest = get_update_interval_ms (RATE_2S);
@@ -257,7 +257,7 @@ resize_history (const Ptr<CPUHeatmap> &base, gssize history_size)
 
 
 static PluginSize
-size_cb (XfcePanelPlugin *plugin, guint plugin_size, const Ptr<CPUHeatmap> &base)
+size_cb (XfcePanelPlugin *plugin, guint plugin_size, const Ptr<CPUWaterfall> &base)
 {
     gint frame_h, frame_v, size;
     gssize history;
@@ -307,7 +307,7 @@ size_cb (XfcePanelPlugin *plugin, guint plugin_size, const Ptr<CPUHeatmap> &base
 
 
 static void
-mode_cb (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
+mode_cb (XfcePanelPlugin *plugin, const Ptr<CPUWaterfall> &base)
 {
     gtk_orientable_set_orientation (GTK_ORIENTABLE (base->box), xfce_panel_plugin_get_orientation (plugin));
     size_cb (plugin, xfce_panel_plugin_get_size (base->plugin), base);
@@ -317,7 +317,7 @@ mode_cb (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
 
 
 static xfce4::TimeoutResponse
-update_cb (const Ptr<CPUHeatmap> &base)
+update_cb (const Ptr<CPUWaterfall> &base)
 {
     if (!read_cpu_data (base->cpu_data))
         return xfce4::TIMEOUT_AGAIN;
@@ -346,7 +346,7 @@ update_cb (const Ptr<CPUHeatmap> &base)
 
 
 static void
-update_tooltip (const Ptr<CPUHeatmap> &base)
+update_tooltip (const Ptr<CPUWaterfall> &base)
 {
     auto tooltip = xfce4::sprintf (_("Usage: %u%%"), (guint) roundf (base->cpu_data[0].load * 100));
     if (gtk_label_get_text (GTK_LABEL (base->tooltip_text)) != tooltip)
@@ -356,7 +356,7 @@ update_tooltip (const Ptr<CPUHeatmap> &base)
 
 
 static TooltipTime
-tooltip_cb (GtkTooltip *tooltip, const Ptr<CPUHeatmap> &base)
+tooltip_cb (GtkTooltip *tooltip, const Ptr<CPUWaterfall> &base)
 {
     gtk_tooltip_set_custom (tooltip, base->tooltip_text);
     return xfce4::NOW;
@@ -365,11 +365,11 @@ tooltip_cb (GtkTooltip *tooltip, const Ptr<CPUHeatmap> &base)
 
 
 static Propagation
-draw_area_cb (cairo_t *cr, const Ptr<CPUHeatmap> &base)
+draw_area_cb (cairo_t *cr, const Ptr<CPUWaterfall> &base)
 {
     GtkAllocation alloc;
     gint w, h;
-    void (*draw) (const Ptr<CPUHeatmap> &base, cairo_t *cr, gint w, gint h) = NULL;
+    void (*draw) (const Ptr<CPUWaterfall> &base, cairo_t *cr, gint w, gint h) = NULL;
 
     gtk_widget_get_allocation (base->draw_area, &alloc);
     w = alloc.width;
@@ -379,8 +379,8 @@ draw_area_cb (cairo_t *cr, const Ptr<CPUHeatmap> &base)
     {
         case MODE_DISABLED:
             break;
-        case MODE_HEATMAP:
-            draw = draw_graph_heatmap;
+        case MODE_WATERFALL:
+            draw = draw_waterfall;
             break;
     }
 
@@ -427,7 +427,7 @@ default_command (bool *in_terminal, bool *startup_notification)
 
 
 static Propagation
-command_cb (GdkEventButton *event, const Ptr<CPUHeatmap> &base)
+command_cb (GdkEventButton *event, const Ptr<CPUWaterfall> &base)
 {
     if (event->button == 1)
     {
@@ -460,7 +460,7 @@ command_cb (GdkEventButton *event, const Ptr<CPUHeatmap> &base)
  * Returns: update interval in milliseconds.
  */
 guint
-get_update_interval_ms (CPUHeatmapUpdateRate rate)
+get_update_interval_ms (CPUWaterfallUpdateRate rate)
 {
     switch (rate)
     {
@@ -476,7 +476,7 @@ get_update_interval_ms (CPUHeatmapUpdateRate rate)
 
 
 void
-CPUHeatmap::set_startup_notification (const Ptr<CPUHeatmap> &base, bool startup_notification)
+CPUWaterfall::set_startup_notification (const Ptr<CPUWaterfall> &base, bool startup_notification)
 {
     base->command_startup_notification = startup_notification;
 }
@@ -484,7 +484,7 @@ CPUHeatmap::set_startup_notification (const Ptr<CPUHeatmap> &base, bool startup_
 
 
 void
-CPUHeatmap::set_in_terminal (const Ptr<CPUHeatmap> &base, bool in_terminal)
+CPUWaterfall::set_in_terminal (const Ptr<CPUWaterfall> &base, bool in_terminal)
 {
     base->command_in_terminal = in_terminal;
 }
@@ -492,7 +492,7 @@ CPUHeatmap::set_in_terminal (const Ptr<CPUHeatmap> &base, bool in_terminal)
 
 
 void
-CPUHeatmap::set_command (const Ptr<CPUHeatmap> &base, const std::string &command)
+CPUWaterfall::set_command (const Ptr<CPUWaterfall> &base, const std::string &command)
 {
     base->command = xfce4::trim (command);
 }
@@ -501,7 +501,7 @@ CPUHeatmap::set_command (const Ptr<CPUHeatmap> &base, const std::string &command
 
 
 void
-CPUHeatmap::set_border (const Ptr<CPUHeatmap> &base, bool has_border)
+CPUWaterfall::set_border (const Ptr<CPUWaterfall> &base, bool has_border)
 {
     if (base->has_border != has_border)
     {
@@ -513,7 +513,7 @@ CPUHeatmap::set_border (const Ptr<CPUHeatmap> &base, bool has_border)
 
 
 void
-CPUHeatmap::set_average (const Ptr<CPUHeatmap> &base, bool has_average )
+CPUWaterfall::set_average (const Ptr<CPUWaterfall> &base, bool has_average )
 {
     if (base->has_average != has_average)
     {
@@ -524,7 +524,7 @@ CPUHeatmap::set_average (const Ptr<CPUHeatmap> &base, bool has_average )
 
 
 void
-CPUHeatmap::set_frame (const Ptr<CPUHeatmap> &base, bool has_frame)
+CPUWaterfall::set_frame (const Ptr<CPUWaterfall> &base, bool has_frame)
 {
     base->has_frame = has_frame;
     gtk_frame_set_shadow_type (GTK_FRAME (base->frame_widget), has_frame ? GTK_SHADOW_IN : GTK_SHADOW_NONE);
@@ -538,7 +538,7 @@ CPUHeatmap::set_frame (const Ptr<CPUHeatmap> &base, bool has_frame)
 
 
 void
-CPUHeatmap::set_update_rate (const Ptr<CPUHeatmap> &base, CPUHeatmapUpdateRate rate)
+CPUWaterfall::set_update_rate (const Ptr<CPUWaterfall> &base, CPUWaterfallUpdateRate rate)
 {
     bool change = (base->update_interval != rate);
     bool init = (base->timeout_id == 0);
@@ -560,7 +560,7 @@ CPUHeatmap::set_update_rate (const Ptr<CPUHeatmap> &base, CPUHeatmapUpdateRate r
 
 
 void
-CPUHeatmap::set_size (const Ptr<CPUHeatmap> &base, guint size)
+CPUWaterfall::set_size (const Ptr<CPUWaterfall> &base, guint size)
 {
     if (G_UNLIKELY (size < MIN_SIZE))
         size = MIN_SIZE;
@@ -575,7 +575,7 @@ CPUHeatmap::set_size (const Ptr<CPUHeatmap> &base, guint size)
 
 
 void
-CPUHeatmap::set_mode (const Ptr<CPUHeatmap> &base, CPUHeatmapMode mode)
+CPUWaterfall::set_mode (const Ptr<CPUWaterfall> &base, CPUWaterfallMode mode)
 {
     base->mode = mode;
     if (mode == MODE_DISABLED)
@@ -592,7 +592,7 @@ CPUHeatmap::set_mode (const Ptr<CPUHeatmap> &base, CPUHeatmapMode mode)
 
 
 void
-CPUHeatmap::set_color (const Ptr<CPUHeatmap> &base, CPUHeatmapColorNumber number, const xfce4::RGBA &color)
+CPUWaterfall::set_color (const Ptr<CPUWaterfall> &base, CPUWaterfallColorNumber number, const xfce4::RGBA &color)
 {
     if (!base->colors[number].equals(color))
     {

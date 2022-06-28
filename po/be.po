@@ -21,15 +21,15 @@ msgstr ""
 "Language: be\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: ../panel-plugin/heatmap.cc:167 ../panel-plugin/cpuheatmap.desktop.in.h:2
+#: ../panel-plugin/waterfall.cc:167 ../panel-plugin/cpuwaterfall.desktop.in.h:2
 msgid "Graphical representation of the CPU load"
 msgstr "Графічнае адлюстраванне нагрузкі на ЦП"
 
-#: ../panel-plugin/heatmap.cc:169
+#: ../panel-plugin/waterfall.cc:169
 msgid "Copyright (c) 2003-2021\n"
 msgstr "Капiрайт (c) 2003-2021\n"
 
-#: ../panel-plugin/heatmap.cc:642
+#: ../panel-plugin/waterfall.cc:642
 #, c-format
 msgid "Usage: %u%%"
 msgstr "Выкарыстанне: %u%%"
@@ -46,8 +46,8 @@ msgid ""
 msgstr "Значэнне \"Па пунктах\" паказвае імгненны ўплыў на прадукцыйнасць струменяў, якія ўдзельнічаюць у неаптымальных рашэннях планавання адначасовай шматструменевасці (SMT)."
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Heatmap Properties"
-msgstr "Уласцівасці CPU Heatmap"
+msgid "CPU Waterfall Properties"
+msgstr "Уласцівасці CPU Waterfall"
 
 #: ../panel-plugin/properties.cc:108
 msgid "_Close"
@@ -266,6 +266,6 @@ msgstr "Па пунктах: %.3g%%"
 msgid "SMT detected: N/A"
 msgstr "Падтрымка SMT: не вызначана"
 
-#: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Heatmap"
+#: ../panel-plugin/cpuwaterfall.desktop.in.h:1
+msgid "CPU Waterfall"
 msgstr "Графікі ЦП"

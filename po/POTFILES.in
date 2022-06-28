@@ -1,7 +1,7 @@
-panel-plugin/heatmap.cc
+panel-plugin/waterfall.cc
 panel-plugin/mode.cc
 panel-plugin/os.cc
 panel-plugin/properties.cc
 panel-plugin/settings.cc
-panel-plugin/cpuheatmap.desktop.in
+panel-plugin/cpuwaterfall.desktop.in
 

@@ -1,5 +1,5 @@
-/*  heatmap.h
- *  Part of xfce4-cpuheatmap-plugin
+/*  waterfall.h
+ *  Part of xfce4-cpuwaterfall-plugin
  *
  *  Copyright (c) Alexander Nordfelth <alex.nordfelth@telia.com>
  *  Copyright (c) gatopeich <gatoguan-os@yahoo.com>
@@ -21,8 +21,8 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-#ifndef _XFCE_CPUHEATMAP_CPU_H_
-#define _XFCE_CPUHEATMAP_CPU_H_
+#ifndef _XFCE_CPUWATERFALL_CPU_H_
+#define _XFCE_CPUWATERFALL_CPU_H_
 
 #if HAVE_CONFIG_H
 #include "config.h"
@@ -44,15 +44,15 @@ using xfce4::Ptr0;
 #define MIN_SIZE 10
 
 
-enum CPUHeatmapMode
+enum CPUWaterfallMode
 {
     MODE_DISABLED = 0,
-    MODE_HEATMAP  = 1,
+    MODE_WATERFALL  = 1,
 };
 
 
 /* Number of milliseconds between updates */
-enum CPUHeatmapUpdateRate
+enum CPUWaterfallUpdateRate
 {
     RATE_100MS = 0,
     RATE_200MS = 1,
@@ -61,7 +61,7 @@ enum CPUHeatmapUpdateRate
     RATE_2S    = 4,
 };
 
-enum CPUHeatmapColorNumber
+enum CPUWaterfallColorNumber
 {
     BG_COLOR   = 0,
     FG_COLOR1  = 1,
@@ -77,7 +77,7 @@ struct CpuLoad
 } __attribute__((packed));
 
 
-struct CPUHeatmap
+struct CPUWaterfall
 {
     /* GUI components */
     XfcePanelPlugin *plugin;
@@ -94,9 +94,9 @@ struct CPUHeatmap
     GtkWidget *tooltip_text;
 
     /* Settings */
-    CPUHeatmapUpdateRate update_interval;
+    CPUWaterfallUpdateRate update_interval;
     guint                size;
-    CPUHeatmapMode       mode;
+    CPUWaterfallMode       mode;
     std::string          command;
     xfce4::RGBA          colors[NUM_COLORS];
 
@@ -121,20 +121,20 @@ struct CPUHeatmap
     Ptr0<Topology> topology;
     CpuStats stats;
 
-    ~CPUHeatmap();
+    ~CPUWaterfall();
 
-    static void set_border               (const Ptr<CPUHeatmap> &base, bool border);
-    static void set_color                (const Ptr<CPUHeatmap> &base, CPUHeatmapColorNumber number, const xfce4::RGBA &color);
-    static void set_command              (const Ptr<CPUHeatmap> &base, const std::string &command);
-    static void set_frame                (const Ptr<CPUHeatmap> &base, bool frame);
-    static void set_in_terminal          (const Ptr<CPUHeatmap> &base, bool in_terminal);
-    static void set_mode                 (const Ptr<CPUHeatmap> &base, CPUHeatmapMode mode);
-    static void set_size                 (const Ptr<CPUHeatmap> &base, guint width);
-    static void set_startup_notification (const Ptr<CPUHeatmap> &base, bool startup_notification);
-    static void set_update_rate          (const Ptr<CPUHeatmap> &base, CPUHeatmapUpdateRate rate);
-    static void set_average              (const Ptr<CPUHeatmap> &base, bool has_average );
+    static void set_border               (const Ptr<CPUWaterfall> &base, bool border);
+    static void set_color                (const Ptr<CPUWaterfall> &base, CPUWaterfallColorNumber number, const xfce4::RGBA &color);
+    static void set_command              (const Ptr<CPUWaterfall> &base, const std::string &command);
+    static void set_frame                (const Ptr<CPUWaterfall> &base, bool frame);
+    static void set_in_terminal          (const Ptr<CPUWaterfall> &base, bool in_terminal);
+    static void set_mode                 (const Ptr<CPUWaterfall> &base, CPUWaterfallMode mode);
+    static void set_size                 (const Ptr<CPUWaterfall> &base, guint width);
+    static void set_startup_notification (const Ptr<CPUWaterfall> &base, bool startup_notification);
+    static void set_update_rate          (const Ptr<CPUWaterfall> &base, CPUWaterfallUpdateRate rate);
+    static void set_average              (const Ptr<CPUWaterfall> &base, bool has_average );
 };
 
-guint get_update_interval_ms (CPUHeatmapUpdateRate rate);
+guint get_update_interval_ms (CPUWaterfallUpdateRate rate);
 
-#endif /* _XFCE_CPUHEATMAP_CPU_H_ */
+#endif /* _XFCE_CPUWATERFALL_CPU_H_ */

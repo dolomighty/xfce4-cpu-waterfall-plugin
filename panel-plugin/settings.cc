@@ -1,5 +1,5 @@
 /*  settings.cc
- *  Part of xfce4-cpuheatmap-plugin
+ *  Part of xfce4-cpuwaterfall-plugin
  *
  *  Copyright (c) Alexander Nordfelth <alex.nordfelth@telia.com>
  *  Copyright (c) gatopeich <gatoguan-os@yahoo.com>
@@ -48,11 +48,11 @@ static const gchar *const color_keys[NUM_COLORS] =
 
 
 void
-read_settings (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
+read_settings (XfcePanelPlugin *plugin, const Ptr<CPUWaterfall> &base)
 {
     // defaults
-    CPUHeatmapUpdateRate rate = RATE_200MS;
-    CPUHeatmapMode mode = MODE_HEATMAP;
+    CPUWaterfallUpdateRate rate = RATE_200MS;
+    CPUWaterfallMode mode = MODE_WATERFALL;
     bool border = true;
     bool frame = false;
     bool has_average = true;
@@ -77,7 +77,7 @@ read_settings (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
         {
             Ptr0<std::string> value;
 
-            rate = (CPUHeatmapUpdateRate) rc->read_int_entry ("UpdateInterval", rate);
+            rate = (CPUWaterfallUpdateRate) rc->read_int_entry ("UpdateInterval", rate);
             size = rc->read_int_entry ("Size", size);
             frame = rc->read_int_entry ("Frame", frame);
             in_terminal = rc->read_int_entry ("InTerminal", in_terminal);
@@ -107,10 +107,10 @@ read_settings (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
         switch (mode)
         {
             case MODE_DISABLED:
-            case MODE_HEATMAP:
+            case MODE_WATERFALL:
                 break;
             default:
-                mode = MODE_HEATMAP;
+                mode = MODE_WATERFALL;
         }
 
         switch (rate)
@@ -129,23 +129,23 @@ read_settings (XfcePanelPlugin *plugin, const Ptr<CPUHeatmap> &base)
             size = 10;
     }
 
-    CPUHeatmap::set_border (base, border);
+    CPUWaterfall::set_border (base, border);
     for (guint i = 0; i < NUM_COLORS; i++){
-        CPUHeatmap::set_color (base, (CPUHeatmapColorNumber) i, colors[i]);
+        CPUWaterfall::set_color (base, (CPUWaterfallColorNumber) i, colors[i]);
     }
-    CPUHeatmap::set_command (base, command);
-    CPUHeatmap::set_in_terminal (base, in_terminal);
-    CPUHeatmap::set_frame (base, frame);
-    CPUHeatmap::set_mode (base, mode);
-    CPUHeatmap::set_size (base, size);
-    CPUHeatmap::set_startup_notification (base, startup_notification);
-    CPUHeatmap::set_update_rate(base, rate);
-    CPUHeatmap::set_average(base, has_average);
+    CPUWaterfall::set_command (base, command);
+    CPUWaterfall::set_in_terminal (base, in_terminal);
+    CPUWaterfall::set_frame (base, frame);
+    CPUWaterfall::set_mode (base, mode);
+    CPUWaterfall::set_size (base, size);
+    CPUWaterfall::set_startup_notification (base, startup_notification);
+    CPUWaterfall::set_update_rate(base, rate);
+    CPUWaterfall::set_average(base, has_average);
 }
 
 
 void
-write_settings (XfcePanelPlugin *plugin, const Ptr<const CPUHeatmap> &base)
+write_settings (XfcePanelPlugin *plugin, const Ptr<const CPUWaterfall> &base)
 {
     char *file;
 

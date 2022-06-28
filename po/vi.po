@@ -18,22 +18,22 @@ msgstr ""
 "Language: vi\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../panel-plugin/heatmap.cc:160 ../panel-plugin/cpuheatmap.desktop.in.h:2
+#: ../panel-plugin/waterfall.cc:160 ../panel-plugin/cpuwaterfall.desktop.in.h:2
 msgid "Graphical representation of the CPU load"
 msgstr ""
 
-#: ../panel-plugin/heatmap.cc:162
+#: ../panel-plugin/waterfall.cc:162
 msgid "Copyright (c) 2003-2019\n"
 msgstr ""
 
-#: ../panel-plugin/heatmap.cc:407
+#: ../panel-plugin/waterfall.cc:407
 #, c-format
 msgid "Usage: %u%%"
 msgstr "Mức sử dụng: %u%%"
 
 #: ../panel-plugin/properties.cc:132
-msgid "CPU Heatmap Properties"
-msgstr "Thuộc tính CPU Heatmap"
+msgid "CPU Waterfall Properties"
+msgstr "Thuộc tính CPU Waterfall"
 
 #: ../panel-plugin/properties.cc:149
 msgid "Use non-linear time-scale"
@@ -172,6 +172,6 @@ msgstr ""
 msgid "Color mode: "
 msgstr "Chế độ màu"
 
-#: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Heatmap"
-msgstr "CPU Heatmap"
+#: ../panel-plugin/cpuwaterfall.desktop.in.h:1
+msgid "CPU Waterfall"
+msgstr "CPU Waterfall"

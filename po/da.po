@@ -20,15 +20,15 @@ msgstr ""
 "Language: da\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../panel-plugin/heatmap.cc:167 ../panel-plugin/cpuheatmap.desktop.in.h:2
+#: ../panel-plugin/waterfall.cc:167 ../panel-plugin/cpuwaterfall.desktop.in.h:2
 msgid "Graphical representation of the CPU load"
 msgstr "Grafisk visning af CPU-belastningen"
 
-#: ../panel-plugin/heatmap.cc:169
+#: ../panel-plugin/waterfall.cc:169
 msgid "Copyright (c) 2003-2021\n"
 msgstr "Ophavsret (c) 2003-2021\n"
 
-#: ../panel-plugin/heatmap.cc:642
+#: ../panel-plugin/waterfall.cc:642
 #, c-format
 msgid "Usage: %u%%"
 msgstr "Forbrug: %u%%"
@@ -45,7 +45,7 @@ msgid ""
 msgstr "'Hotspots' viser den midlertidige indflydelsen på ydelsen kun for de tråde som er involveret i beslutninger om underoptimale SMT-planlægninger."
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Heatmap Properties"
+msgid "CPU Waterfall Properties"
 msgstr "Egenskaber til CPU-graf"
 
 #: ../panel-plugin/properties.cc:108
@@ -263,6 +263,6 @@ msgstr "Hotspots: %.3g%%"
 msgid "SMT detected: N/A"
 msgstr "SMT registreret: —"
 
-#: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Heatmap"
+#: ../panel-plugin/cpuwaterfall.desktop.in.h:1
+msgid "CPU Waterfall"
 msgstr "CPU-graf"
