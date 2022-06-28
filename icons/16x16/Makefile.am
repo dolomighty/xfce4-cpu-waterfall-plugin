@@ -1,6 +1,8 @@
 iconsdir = $(datadir)/icons/hicolor/16x16/apps
-icons_DATA = org.xfce.panel.cpuheatmap.png
+icons_DATA = ../scalable/org.xfce.panel.cpuheatmap.svg
 EXTRA_DIST = $(icons_DATA)
 
-update:
-	inkscape -o org.xfce.panel.cpuheatmap.png org.xfce.panel.cpuheatmap.svg
+all: org.xfce.panel.cpuheatmap.png
+
+org.xfce.panel.cpuheatmap.png: ../scalable/org.xfce.panel.cpuheatmap.svg
+	inkscape -e org.xfce.panel.cpuheatmap.png -w 16 -h 16 -z ../scalable/org.xfce.panel.cpuheatmap.svg

@@ -28,7 +28,7 @@
 #include <cairo/cairo.h>
 #include <math.h>
 #include <stdlib.h>
-#include "mode.h"
+#include "draw_graph_heatmap.h"
 
 // amo assert e la voglio pure in release
 #undef NDEBUG
@@ -115,6 +115,42 @@ get_surf_and_patt(
 
 
 
+void
+vline( const Ptr<CPUHeatmap> &base, int y0, int y1, 
+    unsigned char *bgra, int stride, xfce4::RGBA c, float border )
+{
+    const int br = c.R*255;
+    const int bg = c.G*255;
+    const int bb = c.B*255;
+
+    xfce4::RGBA dim = lerp_RGBA( base->colors[BG_COLOR], c, border );
+    const int hr = dim.R*255;
+    const int hg = dim.G*255;
+    const int hb = dim.B*255;
+
+    //  hrgb    header
+    //  brgb    body
+    //  brgb    body
+    //  brgb    body
+    //  frgb    footer
+
+    int y;
+    for( y=y0; y<y0+1; y++, bgra+=stride ){
+        bgra[0]=hb;
+        bgra[1]=hg;
+        bgra[2]=hr;
+    }
+    for(; y<y1-1; y++, bgra+=stride ){
+        bgra[0]=bb;
+        bgra[1]=bg;
+        bgra[2]=br;
+    }
+    for(; y<y1; y++, bgra+=stride ){
+        bgra[0]=hb;
+        bgra[1]=hg;
+        bgra[2]=hr;
+    }
+}
 
 
 void
@@ -144,7 +180,7 @@ draw_graph_heatmap (const Ptr<CPUHeatmap> &base, cairo_t *cr, gint w, gint h)
     cairo_pattern_t *patt;
     get_surf_and_patt(&surf,&patt,w,h,base->colors[BG_COLOR]);
 
-    int stride = cairo_image_surface_get_stride(surf);
+    const int stride = cairo_image_surface_get_stride(surf);
     unsigned char *bgra_pixmap = cairo_image_surface_get_data(surf);
     cairo_surface_flush(surf);
 
@@ -152,46 +188,37 @@ draw_graph_heatmap (const Ptr<CPUHeatmap> &base, cairo_t *cr, gint w, gint h)
     int bars=cores-1;   // cores = average pseudocore + cores
     int bar=0;
 
+    const gssize mask = base->history.mask();
+    const int off = base->history.offset;
+
     if(base->has_average){
         bars=cores+1;   // la avg la facciamo alta il doppio
 
         for( int core=0; core<1; core++, bar++ ) 
         {
             // leggiamo solo l'ultimo valore del core
-            const CpuLoad *data = base->history.data[core];
-            const gssize mask = base->history.mask();
-            const int off = base->history.offset;
+            CpuLoad *data = base->history.data[core];
+            float v = data[off&mask].value;
+            int y0 = h*(bar+0)/bars;
+            int y1 = h*(bar+1)/bars;
+            vline(
+                base,
+                y0,y1,
+                &bgra_pixmap[y0*stride+x*4],stride,
+                lerp_RGBA_table(base->colors, NUM_COLORS, v),
+                0.5
+            );
 
-            xfce4::RGBA c = lerp_RGBA_table(base->colors, NUM_COLORS, data[off&mask].value);
-            int b = 255*c.B;
-            int g = 255*c.G;
-            int r = 255*c.R;
-
-            // disegnamo un segmento verticale
-            int y0=h*(bar+0)/bars;
-            int y1=h*(bar+1)/bars;
-            
-            unsigned char *bgr = &bgra_pixmap[y0*stride+x*4];
-
-            for( int y=y0; y<y1; y++, bgr+=stride ){
-                bgr[0]=b;
-                bgr[1]=g;
-                bgr[2]=r;
-            }
-
-            // disegnamo un segmento verticale
             bar++;
-            y0=h*(bar+0)/bars;
-            y1=h*(bar+1)/bars;
-            b = 255*base->colors[BG_COLOR].B;
-            g = 255*base->colors[BG_COLOR].G;
-            r = 255*base->colors[BG_COLOR].R;
-
-            for( int y=y0; y<y1; y++, bgr+=stride ){
-                bgr[0]=b;
-                bgr[1]=g;
-                bgr[2]=r;
-            }
+            y0 = h*(bar+0)/bars;
+            y1 = h*(bar+1)/bars;
+            vline(
+                base,
+                y0,y1,
+                &bgra_pixmap[y0*stride+x*4],stride,
+                base->colors[BG_COLOR],
+                0.5
+            );
         }
     }
 
@@ -200,30 +227,21 @@ draw_graph_heatmap (const Ptr<CPUHeatmap> &base, cairo_t *cr, gint w, gint h)
     for( int core=1; core<cores; core++, bar++ ) 
     {
         // leggiamo solo l'ultimo valore del core
-        const CpuLoad *data = base->history.data[core];
-        const gssize mask = base->history.mask();
-        const int off = base->history.offset;
-
-        xfce4::RGBA c = lerp_RGBA_table(base->colors, NUM_COLORS, data[off&mask].value);
-        const int b = 255*c.B;
-        const int g = 255*c.G;
-        const int r = 255*c.R;
-
-        // disegnamo un segmento verticale
-        int y0=h*(bar+0)/bars;
-        int y1=h*(bar+1)/bars;
-        
-        unsigned char *bgr = &bgra_pixmap[y0*stride+x*4];
-
-        for( int y=y0; y<y1; y++, bgr+=stride ){
-            bgr[0]=b;
-            bgr[1]=g;
-            bgr[2]=r;
-        }
+        CpuLoad *data = base->history.data[core];
+        float v = data[off&mask].value;
+        int y0 = h*(bar+0)/bars;
+        int y1 = h*(bar+1)/bars;
+        vline(
+            base,
+            y0,y1,
+            &bgra_pixmap[y0*stride+x*4],stride,
+            lerp_RGBA_table(base->colors, NUM_COLORS, v),
+            0.5
+        );
     }
 
-
-    cairo_surface_mark_dirty(surf);
+//    cairo_surface_mark_dirty(surf);
+    cairo_surface_mark_dirty_rectangle(surf,x,0,1,h);
 
     // ruotiamo il pattern
     x=(x+1)%w;
@@ -240,7 +258,8 @@ draw_graph_heatmap (const Ptr<CPUHeatmap> &base, cairo_t *cr, gint w, gint h)
     // tipo almeno il doppio
 
     // ora proviamo via pattern
-    // noi nella surface disegnamo una colonna e lasciamo invariato il resto
+    // nella surface disegnamo solo la colonna più recente
+    // il resto rimane invariato
     // il pattern repeat (via hw) fa il resto
 
     // si sembra performare marginalmente meglio

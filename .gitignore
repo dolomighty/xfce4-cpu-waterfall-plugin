@@ -29,3 +29,4 @@ po/Makefile.in.in
 po/POTFILES
 po/stamp-*
 stamp-h1
+*.png
