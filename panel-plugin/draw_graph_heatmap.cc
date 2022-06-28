@@ -1,12 +1,7 @@
-/*  mode.cc
+/*  
  *  Part of xfce4-cpuheatmap-plugin
  *
- *  Copyright (c) Alexander Nordfelth <alex.nordfelth@telia.com>
- *  Copyright (c) gatopeich <gatoguan-os@yahoo.com>
- *  Copyright (c) 2007-2008 Angelo Arrifano <miknix@gmail.com>
- *  Copyright (c) 2007-2008 Lidiriel <lidiriel@coriolys.org>
- *  Copyright (c) 2010 Florian Rivoal <frivoal@gmail.com>
- *  Copyright (c) 2021 Jan Ziak <0xe2.0x9a.0x9b@xfce.org>
+ *  Copyright (c) Andrea Villa <dolomighty74@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

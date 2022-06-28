@@ -27,7 +27,7 @@
 #include "xfce4++/util/fixes.h"
 #include "heatmap.h"
 #include "settings.h"
-#include "mode.h"
+#include "draw_graph_heatmap.h"
 #include "plugin.h"
 #include "properties.h"
 #include <libxfce4ui/libxfce4ui.h>

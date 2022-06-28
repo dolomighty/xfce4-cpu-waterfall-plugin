@@ -17,8 +17,8 @@ libcpuheatmap_la_LIBADD = \
 	-lm
 
 libcpuheatmap_la_SOURCES = \
-	mode.cc \
-	mode.h \
+	draw_graph_heatmap.cc \
+	draw_graph_heatmap.h \
 	heatmap.cc \
 	heatmap.h \
 	os.cc \
