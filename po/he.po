@@ -19,15 +19,15 @@ msgstr ""
 "Language: he\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;\n"
 
-#: ../panel-plugin/heatmap.cc:167 ../panel-plugin/cpuheatmap.desktop.in.h:2
+#: ../panel-plugin/waterfall.cc:167 ../panel-plugin/cpuwaterfall.desktop.in.h:2
 msgid "Graphical representation of the CPU load"
 msgstr "תיאור גרפי של עומס המעבד"
 
-#: ../panel-plugin/heatmap.cc:169
+#: ../panel-plugin/waterfall.cc:169
 msgid "Copyright (c) 2003-2021\n"
 msgstr "זכויות יוצרים (c) 2003-2021\n"
 
-#: ../panel-plugin/heatmap.cc:642
+#: ../panel-plugin/waterfall.cc:642
 #, c-format
 msgid "Usage: %u%%"
 msgstr "שימוש: %u%% "
@@ -44,7 +44,7 @@ msgid ""
 msgstr "'נקודות חמות' מציג את ההשפעה הרגעית על הביצועים רק של הליכי המשנה המעורבים בהחלטות תזמון ריבוי הליכי משנה בו זמניים תת מיטביות."
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Heatmap Properties"
+msgid "CPU Waterfall Properties"
 msgstr "מאפייני גרף מעבד"
 
 #: ../panel-plugin/properties.cc:108
@@ -264,6 +264,6 @@ msgstr "נקודות חמות:%.3g%%"
 msgid "SMT detected: N/A"
 msgstr "גילוי ריבוי הליכי משנה בו זמניים: לא זמין"
 
-#: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Heatmap"
+#: ../panel-plugin/cpuwaterfall.desktop.in.h:1
+msgid "CPU Waterfall"
 msgstr "גרף מעבד"

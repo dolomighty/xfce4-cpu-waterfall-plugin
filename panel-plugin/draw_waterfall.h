@@ -1,5 +1,5 @@
 /*  
- *  Part of xfce4-cpuheatmap-plugin
+ *  Part of xfce4-cpuwaterfall-plugin
  *
  *  Copyright (c) Alexander Nordfelth <alex.nordfelth@telia.com>
  *  Copyright (c) gatopeich <gatoguan-os@yahoo.com>
@@ -21,11 +21,11 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-#ifndef _XFCE_CPUHEATMAP_MODE_H_
-#define _XFCE_CPUHEATMAP_MODE_H_
+#ifndef _XFCE_CPUWATERFALL_MODE_H_
+#define _XFCE_CPUWATERFALL_MODE_H_
 
-#include "heatmap.h"
+#include "waterfall.h"
 
-void draw_graph_heatmap    (const Ptr<CPUHeatmap> &base, cairo_t *cr, gint w, gint h);
+void draw_waterfall    (const Ptr<CPUWaterfall> &base, cairo_t *cr, gint w, gint h);
 
-#endif /* _XFCE_CPUHEATMAP_MODE_H_ */
+#endif /* _XFCE_CPUWATERFALL_MODE_H_ */

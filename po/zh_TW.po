@@ -21,15 +21,15 @@ msgstr ""
 "Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../panel-plugin/heatmap.cc:167 ../panel-plugin/cpuheatmap.desktop.in.h:2
+#: ../panel-plugin/waterfall.cc:167 ../panel-plugin/cpuwaterfall.desktop.in.h:2
 msgid "Graphical representation of the CPU load"
 msgstr "圖形化呈現 CPU 負載狀況"
 
-#: ../panel-plugin/heatmap.cc:169
+#: ../panel-plugin/waterfall.cc:169
 msgid "Copyright (c) 2003-2021\n"
 msgstr "Copyright (c) 2003-2021\n"
 
-#: ../panel-plugin/heatmap.cc:642
+#: ../panel-plugin/waterfall.cc:642
 #, c-format
 msgid "Usage: %u%%"
 msgstr "使用率：%u%%"
@@ -46,7 +46,7 @@ msgid ""
 msgstr "「熱點」僅顯示對次佳 SMT 調度決策中涉及執行緒的瞬時效能影響。"
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Heatmap Properties"
+msgid "CPU Waterfall Properties"
 msgstr "CPU 圖表屬性"
 
 #: ../panel-plugin/properties.cc:108
@@ -263,6 +263,6 @@ msgstr "熱點：%.3g%%"
 msgid "SMT detected: N/A"
 msgstr "偵測到 SMT：N/A"
 
-#: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Heatmap"
+#: ../panel-plugin/cpuwaterfall.desktop.in.h:1
+msgid "CPU Waterfall"
 msgstr "CPU 圖表"

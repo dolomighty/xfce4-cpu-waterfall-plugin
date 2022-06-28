@@ -19,21 +19,21 @@ msgstr ""
 "Language: lv\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
 
-#: ../panel-plugin/heatmap.cc:160 ../panel-plugin/cpuheatmap.desktop.in.h:2
+#: ../panel-plugin/waterfall.cc:160 ../panel-plugin/cpuwaterfall.desktop.in.h:2
 msgid "Graphical representation of the CPU load"
 msgstr "Grafiska CPU noslodzes attēlošana"
 
-#: ../panel-plugin/heatmap.cc:162
+#: ../panel-plugin/waterfall.cc:162
 msgid "Copyright (c) 2003-2019\n"
 msgstr ""
 
-#: ../panel-plugin/heatmap.cc:407
+#: ../panel-plugin/waterfall.cc:407
 #, c-format
 msgid "Usage: %u%%"
 msgstr ""
 
 #: ../panel-plugin/properties.cc:132
-msgid "CPU Heatmap Properties"
+msgid "CPU Waterfall Properties"
 msgstr ""
 
 #: ../panel-plugin/properties.cc:149
@@ -175,6 +175,6 @@ msgstr "Uguns"
 msgid "Color mode: "
 msgstr "Krāsu režīms: "
 
-#: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Heatmap"
+#: ../panel-plugin/cpuwaterfall.desktop.in.h:1
+msgid "CPU Waterfall"
 msgstr "CPU grafs"

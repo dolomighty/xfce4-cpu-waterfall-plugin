@@ -1,5 +1,5 @@
 /*  os.h
- *  Part of xfce4-cpuheatmap-plugin
+ *  Part of xfce4-cpuwaterfall-plugin
  *
  *  Copyright (c) Alexander Nordfelth <alex.nordfelth@telia.com>
  *  Copyright (c) gatopeich <gatoguan-os@yahoo.com>
@@ -21,8 +21,8 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-#ifndef _XFCE_CPUHEATMAP_OS_H_
-#define _XFCE_CPUHEATMAP_OS_H_
+#ifndef _XFCE_CPUWATERFALL_OS_H_
+#define _XFCE_CPUWATERFALL_OS_H_
 
 #include <glib.h>
 #include <unordered_map>
@@ -77,4 +77,4 @@ guint detect_cpu_number ();
 bool read_cpu_data (std::vector<CpuData> &data);
 Ptr0<Topology> read_topology ();
 
-#endif /* _XFCE_CPUHEATMAP_OS_H */
+#endif /* _XFCE_CPUWATERFALL_OS_H */

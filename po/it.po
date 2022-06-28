@@ -21,15 +21,15 @@ msgstr ""
 "Language: it\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../panel-plugin/heatmap.cc:167 ../panel-plugin/cpuheatmap.desktop.in.h:2
+#: ../panel-plugin/waterfall.cc:167 ../panel-plugin/cpuwaterfall.desktop.in.h:2
 msgid "Graphical representation of the CPU load"
-msgstr "Rappresentazione heatmap del carico CPU"
+msgstr "Rappresentazione waterfall del carico CPU"
 
-#: ../panel-plugin/heatmap.cc:169
+#: ../panel-plugin/waterfall.cc:169
 msgid "Copyright (c) 2003-2021\n"
 msgstr "Copyright © 2003-2021\n"
 
-#: ../panel-plugin/heatmap.cc:642
+#: ../panel-plugin/waterfall.cc:642
 #, c-format
 msgid "Usage: %u%%"
 msgstr "Utilizzo: %u%%"
@@ -46,8 +46,8 @@ msgid ""
 msgstr "'Ristretto' mostra l'impatto momentaneo sulle prestazioni solo nei thread coinvolti nello schedulamento subottimale SMT."
 
 #: ../panel-plugin/properties.cc:104
-msgid "CPU Heatmap Properties"
-msgstr "Proprietà del grafico heatmap della CPU"
+msgid "CPU Waterfall Properties"
+msgstr "Proprietà del grafico waterfall della CPU"
 
 #: ../panel-plugin/properties.cc:108
 msgid "_Close"
@@ -244,6 +244,6 @@ msgstr "Ristretto: %.3g%%"
 msgid "SMT detected: N/A"
 msgstr "SMT rilevato: N/D"
 
-#: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Heatmap"
-msgstr "Heatmap carico CPU"
+#: ../panel-plugin/cpuwaterfall.desktop.in.h:1
+msgid "CPU Waterfall"
+msgstr "Waterfall carico CPU"

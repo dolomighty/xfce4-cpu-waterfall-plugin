@@ -18,21 +18,21 @@ msgstr ""
 "Language: ast\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../panel-plugin/heatmap.cc:153 ../panel-plugin/cpuheatmap.desktop.in.h:2
+#: ../panel-plugin/waterfall.cc:153 ../panel-plugin/cpuwaterfall.desktop.in.h:2
 msgid "Graphical representation of the CPU load"
 msgstr "Representación gráfica de la carga de CPU"
 
-#: ../panel-plugin/heatmap.cc:155
+#: ../panel-plugin/waterfall.cc:155
 msgid "Copyright (c) 2003-2012\n"
 msgstr "Copyright (c) 2003-2012\n"
 
-#: ../panel-plugin/heatmap.cc:368
+#: ../panel-plugin/waterfall.cc:368
 #, c-format
 msgid "Usage: %u%%"
 msgstr "Usu: %u%%"
 
 #: ../panel-plugin/properties.cc:80
-msgid "CPU Heatmap Properties"
+msgid "CPU Waterfall Properties"
 msgstr "Propiedaes del gráficu CPU"
 
 #: ../panel-plugin/properties.cc:98
@@ -165,6 +165,6 @@ msgstr "Fueu"
 msgid "Color mode: "
 msgstr "Mou de color:"
 
-#: ../panel-plugin/cpuheatmap.desktop.in.h:1
-msgid "CPU Heatmap"
+#: ../panel-plugin/cpuwaterfall.desktop.in.h:1
+msgid "CPU Waterfall"
 msgstr "Gráfica de CPU"
