@@ -247,3 +247,6 @@ msgstr "SMT rilevato: N/D"
 #: ../panel-plugin/cpuwaterfall.desktop.in.h:1
 msgid "CPU Waterfall"
 msgstr "Waterfall carico CPU"
+
+msgid "Show average"
+msgstr "Mostra il carico medio"

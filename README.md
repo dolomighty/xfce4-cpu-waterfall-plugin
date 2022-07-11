@@ -47,9 +47,9 @@
 
 RELEASE:
 
-sudo make uninstall
-
 ./autogen.sh --libdir=/usr/lib/x86_64-linux-gnu --datadir=/usr/share --disable-debug
+
+sudo make uninstall
 
 make && sudo make install
 
@@ -63,9 +63,10 @@ unset PANEL_DEBUG ; xfce4-panel -r
 
 DEBUG:
 
-sudo make uninstall
 
 ./autogen.sh --libdir=/usr/lib/x86_64-linux-gnu --datadir=/usr/share --enable-debug
+
+sudo make uninstall
 
 make && sudo make install
 
